@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:context="http://www.springframework.org/schema/context"
+     xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- ***************** this is quartz configuration ******************-->
+    <!-- Job begin-->
+   <!--   <bean id="roadBookSyncJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.saicmotor.telematics.roadbook.scheduler.job.RoadBookSyncJob"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="triggerMessage" value="Job Message In RoadBookSyncJob ${quartz.roadBookSyncCronTrigger}"/>
+            </map>
+        </property>
+        <property name="name" value="RoadBookSyncJob"/>
+        <property name="group" value="RoadBookSyncJobGroup"/>
+        <property name="description" value="RoadBookSyncJob 时间计划任务"/>
+    </bean>
+    <bean id="rbDownloadCountJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.saicmotor.telematics.roadbook.scheduler.job.RBDownloadCountJob"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="triggerMessage" value="Job Message In RBDownloadCountJob ${quartz.rbDownloadCountCronTrigger}"/>
+        </map>
+        </property>
+        <property name="name" value="RBDownloadCountJob"/>
+        <property name="group" value="RBDownloadCountJobGroup"/>
+        <property name="description" value="RBDownloadCountJob 时间计划任务"/>
+     </bean>
+        job end
+        Trigger begin
+    <bean id="rbDownloadCountJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="rbDownloadCountJob" />
+        <property name="cronExpression">
+            <value>${quartz.rbDownloadCountCronTrigger}</value>
+        </property>
+        <property name="name" value="RBDownloadCountJobTrigger"/>
+        <property name="group" value="RBDownloadCountJobTriggerGroup"/>
+        <property name="description" value="RBDownloadCountJob 时间计划任务 ${quartz.rbDownloadCountCronTrigger}"/>
+    </bean>
+    <bean id="roadBookSyncJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="roadBookSyncJob" />
+        <property name="cronExpression">
+            <value>${quartz.roadBookSyncCronTrigger}</value>
+        </property>
+        <property name="name" value="roadBookSyncJobTrigger"/>
+        <property name="group" value="roadBookSyncJobTriggerGroup"/>
+        <property name="description" value="roadBookSyncJob 时间计划任务 ${quartz.roadBookSyncCronTrigger}"/>
+    </bean>
+        Trigger end
+        SchedulerFactoryBean begin
+    <bean id="RoadBookScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false" autowire="byName">
+            <property name="dataSource" ref="dataSource" />
+            <property name="schedulerName" value="${org.quartz.scheduler.instanceName}" />
+            <property name="configLocation" value="classpath:config/spring/app.properties" />
+            <property name="triggers">
+                <list>
+                    add your Trigger
+                    <ref bean="roadBookSyncJobCronTrigger"/>
+                    <ref bean="rbDownloadCountJobCronTrigger"/>
+                </list>
+            </property>
+    </bean> -->
+        <!-- SchedulerFactoryBean end -->
+        </beans>
