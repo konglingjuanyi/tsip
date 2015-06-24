@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.saicmotor.telematics.tsgp</groupId>
-    <artifactId>cloud</artifactId>
+    <groupId>com.saicmotor.telematics.tsgp.tsip</groupId>
+    <artifactId>tsip</artifactId>
     <version>3.0.0-SNAPSHOT</version>
   </parent>
   <groupId>com.saicmotor.telematics.tsgp.tsip</groupId>
-  <artifactId>tsip</artifactId>
+  <artifactId>tsip-web</artifactId>
   <version>3.0.0-SNAPSHOT</version>
-  <name>TSIP Module</name>
-  <packaging>pom</packaging>
+  <name>TSIP Web Module</name>
+  <packaging>war</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -22,12 +23,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <modules>
-    <module>tsip-icd</module>
-    <module>tsip-api</module>
-    <module>tsip-otamsghandler</module>
-    <module>tsip-service</module>
-    <module>tsip-httpServ</module>
-    <module>tsip-web</module>
-  </modules>
 </project>
