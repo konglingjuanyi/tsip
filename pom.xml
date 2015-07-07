@@ -5,6 +5,7 @@
     <groupId>com.saicmotor.telematics.tsgp</groupId>
     <artifactId>cloud</artifactId>
     <version>3.0.0-SNAPSHOT</version>
+    <relativePath>../cloud/pom.xml</relativePath>
   </parent>
   <groupId>com.saicmotor.telematics.tsgp.tsip</groupId>
   <artifactId>tsip</artifactId>
