@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://dv.wx.pateo.com.cn/saic/weather" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://dv.wx.pateo.com.cn/saic/weather"
+             name="EventReceiverPateoService">
+    <documentation>
+        EventReceiverPateoService: Service provided by TSIP for receiving the event message from CC.
+        Roles: Provider = TSIP, Consumer = CC.
+    </documentation>
+    <types xmlns="http://schemas.xmlsoap.org/wsdl/" />
+    <message name="SendDataRequest">
+        <part name="param" type="xs:string"/>
+    </message>
+    <message name="SendDataResponse">
+        <part name="return" type="xs:string"/>
+    </message>
+
+    <portType name="EventReceiverPateo">
+        <operation name="sendDataTSIP">
+            <input message="tns:SendDataRequest"/>
+            <output message="tns:SendDataResponse"/>
+        </operation>
+    </portType>
+    <binding name="EventReceiverPateoPortBinding" type="tns:EventReceiverPateo">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="sendDataTSIP">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="EventReceiverPateoService">
+        <port name="EventReceiverPateoPort" binding="tns:EventReceiverPateoPortBinding">
+            <soap:address location="http://dv.wx.pateo.com.cn/saic/weather/CityWeatherInfomation/"/>
+        </port>
+    </service>
+</definitions>

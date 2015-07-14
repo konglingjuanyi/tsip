@@ -1,68 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-    <timestamp key="byDay" datePattern="yyyyMMdd" />
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
-              by default -->
-         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-            <!--<charset class="java.nio.charset.Charset">UTF-8</charset>-->
-        </encoder>
-    </appender>
-    <appender name="STDOUT_ERROR" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
-              by default -->
+	<timestamp key="byDay" datePattern="yyyyMMdd" />
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
             <charset class="java.nio.charset.Charset">UTF-8</charset>
-        </encoder>
-    </appender>
-      <appender name="FILEINFO"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/telematics/cpsp/rb/biz/rb-info.log</file>
+		</encoder>
+	</appender>
+    <!--
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
-            <fileNamePattern>logs-archive/telematics/cpsp/rb/biz/rb-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 
-            <timeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 10MB -->
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>%msg%n</pattern>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/telematics/tsgp/tsip/tsip-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
             <charset class="java.nio.charset.Charset">UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <appender name="TASK_FILEINFO"
+		</encoder>
+	</appender>
+    -->
+    <appender name="FILEINFO"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/telematics/cpsp/rb/info/job-info.log</file>
+        <file>logs/telematics/tsgp/tsip/biz/tsip-info.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>DEBUG</level>
+            <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>logs-archive/telematics/cpsp/rb/info/job-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-
+            <fileNamePattern>logs-archive/telematics/tsgp/tsip/biz/tsip-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 10MB -->
+                <!-- or whenever the file size reaches 10MB    -->
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
@@ -72,36 +61,10 @@
             <charset class="java.nio.charset.Charset">UTF-8</charset>
         </encoder>
     </appender>
-
-    <appender name="TASK_FILEERROR"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/telematics/cpsp/rb/info/job-exception.log</file>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
-            <fileNamePattern>logs/telematics/cpsp/rb/info/job-exception-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-
-            <timeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 10MB -->
-                <maxFileSize>10MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>%msg%n</pattern>
-            <charset class="java.nio.charset.Charset">UTF-8</charset>
-        </encoder>
-    </appender>
-
 
     <appender name="FILEERROR"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/telematics/cpsp/rb/exception/rb-exception.log</file>
+        <file>logs/telematics/tsgp/tsip/exception/tsip-exception.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
@@ -109,8 +72,7 @@
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>logs-archive/telematics/cpsp/rb/exception/rb-exception-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-
+            <fileNamePattern>logs-archive/telematics/tsgp/tsip/exception/tsip-exception-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 10MB -->
@@ -123,25 +85,71 @@
             <charset class="java.nio.charset.Charset">UTF-8</charset>
         </encoder>
     </appender>
-    <logger name="com.saicmotor.telematics.sp.common.utils.LogHelper" additivity="false" level="INFO">
+
+    <appender name="RETURNRESULTINFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/telematics/tsgp/tsip/biz/return-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>logs-archive/telematics/tsgp/tsip/biz/return-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 10MB -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="VEHICLEREPORTDATA"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/telematics/tsgp/tsip/vd/vehicle-data.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>logs-archive/telematics/tsgp/tsip/vd/vehicle-data-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 10MB -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.saicmotor.telematics.tsgp.tsip" additivity="false" level="INFO">
+        <appender-ref ref="FILE" />
         <appender-ref ref="FILEINFO"/>
         <appender-ref ref="FILEERROR"/>
     </logger>
-    <logger name="com.saicmotor.telematics.sp.*" additivity="false" level="INFO">
-        <appender-ref ref="FILEINFO"/>
-        <appender-ref ref="FILEERROR"/>
+
+    <logger name="returnResultInfo" additivity="false" level="INFO">
+        <appender-ref ref="RETURNRESULTINFO"/>
     </logger>
-    <logger name="com.saicmotor.telematics.roadbook.scheduler.common.util.TaskLogHelper" additivity="false" level="INFO">
-        <appender-ref ref="TASK_FILEINFO"/>
-        <appender-ref ref="TASK_FILEERROR"/>
-        <appender-ref ref="STDOUT" />
+    <logger name="vehicleReportDataInfo" additivity="false" level="INFO">
+        <appender-ref ref="VEHICLEREPORTDATA"/>
     </logger>
 
     <root level="INFO">
-         <appender-ref ref="STDOUT" />
-     </root>
-    <!-- logback为java中的包 -->
-    <logger name="logback"/>
+    </root>
 
-
+    <logger name="com.saicmotor" level="INFO" />
+    <logger name="org.hibernate" level="WARN"/>
 </configuration>

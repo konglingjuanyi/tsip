@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2007-2013 SAIC. All Rights Reserved.
+  ~ This software is published under the terms of the SAIC IT Dept.
+  ~
+  ~ @Project: Telematics
+  -->
+<protocol>
+    <message applicationID="501" messageID="1" spAppID="705" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="1.0">
+                <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.login.MPUserLoggingInReqCallback</callback>
+            </protocol>
+        </protocols>
+    </message>
+</protocol>

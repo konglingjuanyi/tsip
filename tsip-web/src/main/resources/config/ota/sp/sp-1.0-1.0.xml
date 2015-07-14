@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2007-2013 SAIC. All Rights Reserved.
+  ~ This software is published under the terms of the SAIC IT Dept.
+  ~
+  ~ @Project: Telematics
+  -->
+<protocol>
+    <message applicationID="614" messageID="1" spAppID="614" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="619" messageID="1" spAppID="619" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="615" messageID="1" spAppID="615" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="633" messageID="1" spAppID="6N4" spMsgID="1" servicePlatform="017">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+            <protocol clientVersion="1.0" serviceVersion="1.1"/>
+            <protocol clientVersion="6.4" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+    <message applicationID="651" messageID="1" spAppID="651" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="762" messageID="1" spAppID="762" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="781" messageID="1" spAppID="618" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="782" messageID="1" spAppID="663" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="782" messageID="1" spAppID="663" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="765" messageID="1" spAppID="765" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="793" messageID="1" spAppID="651" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="6I1" messageID="1" spAppID="6I1" spMsgID="1" servicePlatform="015">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="6I2" messageID="1" spAppID="6I2" spMsgID="1" servicePlatform="015">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="7A7" messageID="1" spAppID="7A7" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+</protocol>

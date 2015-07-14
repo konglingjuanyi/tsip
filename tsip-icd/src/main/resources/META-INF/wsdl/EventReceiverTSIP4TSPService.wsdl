@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://saicmotor.com/mce550/tsgp/tsip/msg/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://saicmotor.com/mce550/tsgp/tsip/msg/v1"
+             name="EventReceiverTSIP4TSPService">
+    <documentation>
+        EventReceiverTSIP4TSPService: A service provided by SAIC TSIP for authentication, receiving ShortMessage and so on.
+    </documentation>
+    <types>
+        <xs:schema xmlns:tns="http://saicmotor.com/mce550/tsgp/tsip/msg/v1"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+                   targetNamespace="http://saicmotor.com/mce550/tsgp/tsip/msg/v1">
+
+            <xs:element name="sendDataRequest4TSP" type="tns:SendDataRequest4TSP"/>
+            <xs:element name="sendDataResponse4TSP" type="tns:SendDataResponse4TSP"/>
+
+            <xs:complexType name="SendDataRequest4TSP">
+                <xs:sequence>
+                    <xs:element name="messageHeader" type="tns:MessageHeader"/>
+                    <xs:element name="applicationData" type="tns:AttrModel" maxOccurs="unbounded" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="SendDataResponse4TSP">
+                <xs:sequence>
+                    <xs:element name="messageHeader" type="tns:MessageHeader"/>
+                    <xs:element name="applicationData" type="tns:AttrModel" maxOccurs="unbounded" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="MessageHeader">
+                <xs:annotation>
+                    <xs:documentation>Header part for the message received From Service Provider,SMS Gateway.</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="protocalVersion" type="tns:ProtocalVersionType" minOccurs="1"/>
+                    <xs:element name="applicationID" type="tns:ApplicationIDType" minOccurs="1"/>
+                    <xs:element name="messageID" type="tns:MessageIDType" minOccurs="1"/>
+                    <xs:element name="result" type="tns:ResultType" minOccurs="1"/>
+                    <xs:element name="errorMessage" type="tns:ErrorMessageType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="AttrModel">
+                <xs:sequence>
+                    <xs:element name="name" type="tns:AttrModelNameType" minOccurs="1"/>
+                    <xs:element name="value" type="xs:string" maxOccurs="unbounded" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:simpleType name="ProtocalVersionType">
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="255"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ApplicationIDType">
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[A-Za-z0-9]{3}"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="MessageIDType">
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="255"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ResultType">
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="65535"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="ErrorMessageType">
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="1" />
+                    <xs:maxLength value="128" />
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="AttrModelNameType">
+                <xs:restriction base="xs:string">
+                    <xs:minLength value="1" />
+                    <xs:maxLength value="20" />
+                </xs:restriction>
+            </xs:simpleType>
+
+        </xs:schema>
+    </types>
+    <message name="SendDataRequest4TSP">
+        <part name="parameters" element="tns:sendDataRequest4TSP"/>
+    </message>
+    <message name="SendDataResponse4TSP">
+        <part name="parameters" element="tns:sendDataResponse4TSP"/>
+    </message>
+    <portType name="EventReceiverTSIP4TSP">
+        <operation name="sendDataTSIP">
+            <input message="tns:SendDataRequest4TSP"/>
+            <output message="tns:SendDataResponse4TSP"/>
+        </operation>
+    </portType>
+    <binding name="EventReceiverTSIP4TSPPortBinding" type="tns:EventReceiverTSIP4TSP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="sendDataTSIP">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="EventReceiverTSIP4TSPService">
+    <port name="EventReceiverTSIP4TSPPort" binding="tns:EventReceiverTSIP4TSPPortBinding">
+        <soap:address location="http://58.246.133.42/TSIP.Web/services/EventReceiverTSIP4TSP"/>
+    </port>
+</service>
+</definitions>

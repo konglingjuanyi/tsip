@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2007-2013 SAIC. All Rights Reserved.
+  ~ This software is published under the terms of the SAIC IT Dept.
+  ~
+  ~ @Project: Telematics
+  -->
+<protocol>
+    <message applicationID="501" messageID="1" spAppID="705" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+                <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.login.MPUserLoggingInReq_2_0_Callback</callback>
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="502" messageID="1" spAppID="721" spMsgID="1" servicePlatform="007">
+        <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.login.MPVerificationReqCallback</callback>
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="503" messageID="1" spAppID="722" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="504" messageID="1" spAppID="791" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="505" messageID="1" spAppID="792" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="510" messageID="1" spAppID="601" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0"/>
+        </protocols>
+    </message>
+
+    <message applicationID="511" messageID="1" spAppID="607" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="521" messageID="1" spAppID="622" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0"/>
+        </protocols>
+    </message>
+
+    <message applicationID="522" messageID="1" spAppID="625" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0"/>
+        </protocols>
+    </message>
+
+    <message applicationID="523" messageID="1" spAppID="621" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0"/>
+        </protocols>
+    </message>
+
+    <message applicationID="531" messageID="1" spAppID="611" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="533" messageID="1" spAppID="616" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="534" messageID="1" spAppID="617" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="551" messageID="1" spAppID="6D3" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+                <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.FavoritePOIQueryReqCallback</callback>
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="552" messageID="1" spAppID="6D4" spMsgID="1" servicePlatform="010">
+        <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.AddToFavoritePOIReqCallback</callback>     --
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0"/>
+        </protocols>
+    </message>
+    <message applicationID="553" messageID="1" spAppID="6D5" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="554" messageID="1" spAppID="6D1" spMsgID="1" servicePlatform="010">
+        <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.POISendToCarReqCallback</callback> --
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0"/>
+        </protocols>
+    </message>
+    <message applicationID="555" messageID="1" spAppID="6D6" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="556" messageID="1" spAppID="6D8" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="557" messageID="1" spAppID="6D9" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="558" messageID="1" spAppID="6DA" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="561" messageID="1" spAppID="692" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="562" messageID="1" spAppID="694" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="563" messageID="1" spAppID="693" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="564" messageID="1" spAppID="696" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="571" messageID="1" spAppID="731" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="591" messageID="1" spAppID="771" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5B1" messageID="1" spAppID="671" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5B2" messageID="1" spAppID="674" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5D1" messageID="1" spAppID="784" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0"/>
+        </protocols>
+    </message>
+
+    <message applicationID="506" messageID="1" spAppID="794" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="507" messageID="1" spAppID="795" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="508" messageID="1" spAppID="796" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="509" messageID="1" spAppID="797" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="50A" messageID="1" spAppID="79A" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="50B" messageID="1" spAppID="79B" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="5B5" messageID="1" spAppID="675" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5B6" messageID="1" spAppID="676" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5B7" messageID="1" spAppID="677" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5B8" messageID="1" spAppID="678" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5B9" messageID="1" spAppID="679" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5BA" messageID="1" spAppID="67A" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5BB" messageID="1" spAppID="67B" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5BC" messageID="1" spAppID="67C" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="5D2" messageID="1" spAppID="798" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="5D3" messageID="1" spAppID="761" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="5D4" messageID="1" spAppID="799" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="5E1" messageID="1" spAppID="6N1" spMsgID="1" servicePlatform="017">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0"/>
+        </protocols>
+    </message>
+    <message applicationID="5E2" messageID="1" spAppID="6N2" spMsgID="1" servicePlatform="017">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.0"/>
+        </protocols>
+    </message>
+</protocol>

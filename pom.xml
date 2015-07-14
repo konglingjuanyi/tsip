@@ -24,10 +24,10 @@
     </dependency>
   </dependencies>
   <modules>
-    <module>tsip-icd</module>
+    <!--<module>tsip-icd</module>-->
     <module>tsip-api</module>
     <module>tsip-otamsghandler</module>
-    <module>tsip-service</module>
+    <!--<module>tsip-service</module>-->
     <module>tsip-httpServ</module>
     <module>tsip-web</module>
   </modules>

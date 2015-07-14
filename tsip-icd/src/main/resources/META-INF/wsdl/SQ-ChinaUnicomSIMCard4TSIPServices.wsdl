@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 (http://www.altova.com) by sunji (aisa) -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:y="http://www.chinaunicom.cn/ChinaUnicomSIMCard4TSIPServices" xmlns:ns="http://www.chinaunicom.cn/ChinaUnicomSIMCard4TSIPServices/SIMCardType" targetNamespace="http://www.chinaunicom.cn/ChinaUnicomSIMCard4TSIPServices">
+    <types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.chinaunicom.cn/ChinaUnicomSIMCard4TSIPServices/SIMCardType" targetNamespace="http://www.chinaunicom.cn/ChinaUnicomSIMCard4TSIPServices/SIMCardType" elementFormDefault="qualified">
+            <xsd:simpleType name="requestTypeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="11"/>
+                    <xsd:enumeration value="12"/>
+                    <xsd:enumeration value="13"/>
+                    <xsd:enumeration value="14"/>
+                    <xsd:enumeration value="90"/>
+                    <xsd:enumeration value="91"/>
+                    <xsd:enumeration value="92"/>
+                    <xsd:enumeration value="93"/>
+                    <xsd:enumeration value="95"/>
+                    <xsd:enumeration value="97"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="requestIdType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="20"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="iccidType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="19"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="msisdnType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="11" fixed="false"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="rspMsgType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="100"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="productNameType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="100"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="voiceStatusType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="1"/>
+                    <xsd:enumeration value="1"/>
+                    <xsd:enumeration value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="dataStatusType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="1"/>
+                    <xsd:enumeration value="1"/>
+                    <xsd:enumeration value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="monthType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="6"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="SIMCardRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string" />
+                    <xsd:element name="requestType" type="ns1:requestTypeType" />
+                    <xsd:element name="requestId" type="xsd:string" />
+                    <xsd:element name="msisdn" type="xsd:string" />
+                    <xsd:element name="iccid" type="xsd:string" />
+                    <xsd:element name="targetProductId" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="syncSIMCardRequest" type="ns1:SIMCardRequestType"/>
+            <xsd:simpleType name="rspCodeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="4"/>
+                    <xsd:enumeration value="0000"/>
+                    <xsd:enumeration value="9999"/>
+                    <xsd:enumeration value="1001"/>
+                    <xsd:enumeration value="1002"/>
+                    <xsd:enumeration value="1003"/>
+                    <xsd:enumeration value="1004"/>
+                    <xsd:enumeration value="1005"/>
+                    <xsd:enumeration value="1006"/>
+                    <xsd:enumeration value="1007"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="cardStatusType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="1"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="carTypeType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="30"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="dateType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="14"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="StatusChgDateType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:length value="14"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="balanceType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="10"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="owedType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="10"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="usedType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="10"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="remainType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="10"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="remainSMSType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="20"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="oldRequestIdType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="20"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="SIMCardResponseType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="requestType" type="ns1:requestTypeType"/>
+                    <xsd:element name="requestId" type="ns1:requestIdType"/>
+                    <xsd:element name="rspCode" type="ns1:rspCodeType"/>
+                    <xsd:element name="rspMsg" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="syncSIMCardResponse" type="ns1:SIMCardResponseType"/>
+            <xsd:complexType name="ActivedSIMCardRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="requestType" type="ns1:requestTypeType"/>
+                    <xsd:element name="requestId" type="xsd:string"/>
+                    <xsd:element name="msisdn" type="xsd:string"/>
+                    <xsd:element name="iccid" type="xsd:string"/>
+                    <xsd:element name="activeDate" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="syncActivedSIMCardRequest" type="ns1:ActivedSIMCardRequestType" />
+            <xsd:complexType name="ActivedSIMCardResponseType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string" />
+                    <xsd:element name="requestType" type="ns1:requestTypeType" />
+                    <xsd:element name="requestId" type="xsd:string" />
+                    <xsd:element name="rspCode" type="ns1:rspCodeType" />
+                    <xsd:element name="rspMsg" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="syncActivedSIMCardRsponse" type="ns1:ActivedSIMCardResponseType" />
+            <xsd:complexType name="SIMCardResultRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="requestType" type="ns1:requestTypeType"/>
+                    <xsd:element name="requestId" type="ns1:requestIdType"/>
+                    <xsd:element name="oldRequestId" type="ns1:oldRequestIdType"/>
+                    <xsd:element name="cardStatus" type="ns1:cardStatusType"/>
+                    <xsd:element name="serviceStatus" type="xsd:string"/>
+                    <xsd:element name="cardStatusChgDate" type="xsd:string"/>
+                    <xsd:element name="serviceStatusChgDate" type="xsd:string"/>
+                    <xsd:element name="msisdn" type="ns1:msisdnType"/>
+                    <xsd:element name="iccid" type="ns1:iccidType"/>
+                    <xsd:element name="rspCode" type="ns1:rspCodeType"/>
+                    <xsd:element name="rspMsg" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="syncSIMCardResultRequest" type="ns1:SIMCardResultRequestType" />
+            <xsd:complexType name="SIMCardResultResponseType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string" />
+                    <xsd:element name="requestType" type="ns1:requestTypeType" />
+                    <xsd:element name="requestId" type="ns1:requestIdType" />
+                    <xsd:element name="rspCode" type="ns1:rspCodeType" />
+                    <xsd:element name="rspMsg" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="syncSIMCardResultResponse" type="ns1:SIMCardResultResponseType" />
+            <xsd:complexType name="SIMCardResourceRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="requestId" type="ns1:requestIdType"/>
+                    <xsd:element name="requestType" type="ns1:requestTypeType"/>
+                    <xsd:element name="msisdn" type="ns1:msisdnType"/>
+                    <xsd:element name="iccid" type="ns1:iccidType"/>
+                    <xsd:element name="month" type="ns1:monthType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getSIMCardResourceRequest" type="ns1:SIMCardResourceRequestType" />
+            <xsd:simpleType name="cdrType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="01" />
+                    <xsd:enumeration value="02" />
+                    <xsd:enumeration value="03" />
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="payIdType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="20"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="payChannelType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="60"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="totalAmountType">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="0"/>
+                    <xsd:maxLength value="15"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="payInfoType">
+                <xsd:sequence>
+                    <xsd:element name="payId" type="ns1:payIdType"/>
+                    <xsd:element name="payTime" type="ns1:dateType"/>
+                    <xsd:element name="payChannel" type="ns1:payChannelType"/>
+                    <xsd:element name="totalAmount" type="ns1:totalAmountType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="resourceType">
+                <xsd:sequence>
+                    <xsd:element name="cdrtType" type="ns1:cdrType" />
+                    <xsd:element name="used" type="xsd:string" />
+                    <xsd:element name="remain" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SIMCardResourceResponseType">
+                <xsd:sequence>
+                    <xsd:element name="iccid" type="ns1:iccidType"/>
+                    <xsd:element name="msisdn" type="ns1:msisdnType"/>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="cardStatus" type="ns1:cardStatusType"/>
+                    <xsd:element name="carType" type="ns1:carTypeType"/>
+                    <xsd:element name="serviceStatus" type="xsd:string"/>
+                    <xsd:element name="cardStatusChgDate" type="ns1:StatusChgDateType" minOccurs="0"/>
+                    <xsd:element name="serviceStatusChgDate" type="ns1:StatusChgDateType" minOccurs="0"/>
+                    <xsd:element name="productId" type="xsd:string"/>
+                    <xsd:element name="productName" type="ns1:productNameType" minOccurs="0"/>
+                    <xsd:element name="month" type="ns1:monthType"/>
+                    <xsd:element name="date" type="ns1:dateType"/>
+                    <xsd:element name="balance" type="ns1:balanceType"/>
+                    <xsd:element name="owed" type="ns1:owedType"/>
+                    <xsd:element name="usedData" type="ns1:usedType"/>
+                    <xsd:element name="remainData" type="ns1:remainType"/>
+                    <xsd:element name="usedVoice" type="ns1:usedType"/>
+                    <xsd:element name="remainVoice" type="ns1:remainType"/>
+                    <xsd:element name="usedSMS" type="ns1:usedType"/>
+                    <xsd:element name="remainSMS" type="ns1:remainSMSType"/>
+                    <xsd:element name="rspCode" type="ns1:rspCodeType"/>
+                    <xsd:element name="rspMsg" type="ns1:rspMsgType" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getSIMCardResourceResponse" type="ns1:SIMCardResourceResponseType" />
+            <xsd:complexType name="SIMCardStatusRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string" />
+                    <xsd:element name="requestId" type="ns1:requestIdType"/>
+                    <xsd:element name="requestType" type="ns1:requestTypeType"/>
+                    <xsd:element name="iccid" type="ns1:iccidType"/>
+                    <xsd:element name="msisdn" type="ns1:msisdnType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getSIMCardStatusRequest" type="ns1:SIMCardStatusRequestType" />
+            <xsd:complexType name="SIMCardStatusResponseType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="iccid" type="ns1:iccidType"/>
+                    <xsd:element name="msisdn" type="ns1:msisdnType"/>
+                    <xsd:element name="subStatus" type="xsd:string"/>
+                    <xsd:element name="serviceStatus" type="xsd:string"/>
+                    <xsd:element name="cardStatusChgDate" type="ns1:StatusChgDateType" minOccurs="0"/>
+                    <xsd:element name="serviceStatusChgDate" type="ns1:StatusChgDateType" minOccurs="0"/>
+                    <xsd:element name="productId" type="xsd:string"/>
+                    <xsd:element name="productName" type="ns1:productNameType" minOccurs="0"/>
+                    <xsd:element name="voiceStatus" type="ns1:voiceStatusType"/>
+                    <xsd:element name="dataStatus" type="ns1:dataStatusType"/>
+                    <xsd:element name="normalizeDate" type="ns1:StatusChgDateType" minOccurs="0"/>
+                    <xsd:element name="rspCode" type="ns1:rspCodeType"/>
+                    <xsd:element name="rspMsg" type="ns1:rspMsgType" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getSIMCardStatusResponse" type="ns1:SIMCardStatusResponseType" />
+            <xsd:complexType name="BusiResultRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string" />
+                    <xsd:element name="requestType" type="ns1:requestTypeType" />
+                    <xsd:element name="requestId" type="xsd:string" />
+                    <xsd:element name="oldRequestId" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getBusiResultRequest" type="ns1:BusiResultRequestType" />
+            <xsd:element name="getBusiResultResponse" type="ns1:ActivedSIMCardResponseType" />
+            <xsd:complexType name="getSIMCardPaymentRequestType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="requestId" type="ns1:requestIdType"/>
+                    <xsd:element name="requestType" type="ns1:requestTypeType"/>
+                    <xsd:element name="iccid" type="ns1:iccidType"/>
+                    <xsd:element name="msisdn" type="ns1:msisdnType"/>
+                    <xsd:element name="month" type="ns1:monthType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getSIMCardPaymentResponseType">
+                <xsd:sequence>
+                    <xsd:element name="requestor" type="xsd:string"/>
+                    <xsd:element name="payInfo" type="ns1:payInfoType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="rspCode" type="ns1:rspCodeType"/>
+                    <xsd:element name="rspMsg" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getSIMCardPaymentRequest" type="ns1:getSIMCardPaymentRequestType"/>
+            <xsd:element name="getSIMCardPaymentResponse" type="ns1:getSIMCardPaymentResponseType"/>
+        </xsd:schema>
+    </types>
+    <message name="getBusiResultRequest">
+        <part element="ns:getBusiResultRequest" name="request" />
+    </message>
+    <message name="syncSIMCardRequest">
+        <part element="ns:syncSIMCardRequest" name="request" />
+    </message>
+    <message name="getSIMCardResourceResponse">
+        <part element="ns:getSIMCardResourceResponse" name="response" />
+    </message>
+    <message name="getSIMCardResourceRequest">
+        <part element="ns:getSIMCardResourceRequest" name="request" />
+    </message>
+    <message name="syncSIMCardResultRequest">
+        <part element="ns:syncSIMCardResultRequest" name="request" />
+    </message>
+    <message name="getSIMCardStatusResponse">
+        <part element="ns:getSIMCardStatusResponse" name="response" />
+    </message>
+    <message name="syncActivedSIMCardResponse">
+        <part element="ns:syncActivedSIMCardRsponse" name="response" />
+    </message>
+    <message name="syncSIMCardResultResponse">
+        <part element="ns:syncSIMCardResultResponse" name="response" />
+    </message>
+    <message name="syncActivedSIMCardRequest">
+        <part element="ns:syncActivedSIMCardRequest" name="request" />
+    </message>
+    <message name="getSIMCardStatusRequest">
+        <part element="ns:getSIMCardStatusRequest" name="request" />
+    </message>
+    <message name="getBusiResultResponse">
+        <part element="ns:getBusiResultResponse" name="response" />
+    </message>
+    <message name="syncSIMCardResponse">
+        <part element="ns:syncSIMCardResponse" name="response" />
+    </message>
+    <message name="getSIMCardPaymentRequest">
+        <part name="request" element="ns:getSIMCardPaymentRequest"/>
+    </message>
+    <message name="getSIMCardPaymentResponse">
+        <part name="response" element="ns:getSIMCardPaymentResponse"/>
+    </message>
+    <portType name="ChinaUnicomSIMCard4TSIPServices">
+        <operation name="syncSIMCard">
+            <input message="y:syncSIMCardRequest"/>
+            <output message="y:syncSIMCardResponse"/>
+        </operation>
+        <operation name="syncActivedSIMCard">
+            <input message="y:syncActivedSIMCardRequest"/>
+            <output message="y:syncActivedSIMCardResponse"/>
+        </operation>
+        <operation name="syncSIMCardResult">
+            <input message="y:syncSIMCardResultRequest"/>
+            <output message="y:syncSIMCardResultResponse"/>
+        </operation>
+        <operation name="getSIMCardResource">
+            <input message="y:getSIMCardResourceRequest"/>
+            <output message="y:getSIMCardResourceResponse"/>
+        </operation>
+        <operation name="getSIMCardStatus">
+            <input message="y:getSIMCardStatusRequest"/>
+            <output message="y:getSIMCardStatusResponse"/>
+        </operation>
+        <operation name="getBusiResult">
+            <input message="y:getBusiResultRequest"/>
+            <output message="y:getBusiResultResponse"/>
+        </operation>
+        <operation name="getSIMCardPayment">
+            <input message="y:getSIMCardPaymentRequest"/>
+            <output message="y:getSIMCardPaymentResponse"/>
+        </operation>
+    </portType>
+    <binding name="ChinaUnicomSIMCard4TSIPServicesSoapBinding" type="y:ChinaUnicomSIMCard4TSIPServices">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="syncSIMCard">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="syncActivedSIMCard">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="syncSIMCardResult">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getSIMCardResource">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getSIMCardStatus">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getBusiResult">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getSIMCardPayment">
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="ChinaUnicomSIMCard4TSIPServices">
+        <port name="ChinaUnicomSIMCard4TSIPServices" binding="y:ChinaUnicomSIMCard4TSIPServicesSoapBinding">
+            <soap:address location="http://www.chinaunicom.cn/sqwebservice/services/ChinaUnicomSIMCard4TSIPServices"/>
+        </port>
+    </service>
+</definitions>

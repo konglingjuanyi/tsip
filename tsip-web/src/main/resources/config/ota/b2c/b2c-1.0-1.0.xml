@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2007-2013 SAIC. All Rights Reserved.
+  ~ This software is published under the terms of the SAIC IT Dept.
+  ~
+  ~ @Project: Telematics
+  -->
+<protocol>
+    <message applicationID="401" messageID="1" spAppID="601" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="411" messageID="1" spAppID="607" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="421" messageID="1" spAppID="671" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="422" messageID="1" spAppID="624" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="423" messageID="1" spAppID="622" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="424" messageID="1" spAppID="674" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="425" messageID="1" spAppID="621" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="426" messageID="1" spAppID="672" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="427" messageID="1" spAppID="675" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="428" messageID="1" spAppID="676" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="429" messageID="1" spAppID="677" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="42A" messageID="1" spAppID="678" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="42B" messageID="1" spAppID="679" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="42C" messageID="1" spAppID="67A" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="42D" messageID="1" spAppID="67B" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="42E" messageID="1" spAppID="67C" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="42F" messageID="1" spAppID="67D" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2"/>
+        </protocols>
+    </message>
+    <message applicationID="451" messageID="1" spAppID="692" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="452" messageID="1" spAppID="693" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="453" messageID="1" spAppID="694" spMsgID="1" servicePlatform="011">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="461" messageID="1" spAppID="6B1" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="471" messageID="1" spAppID="6D1" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.2">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="472" messageID="1" spAppID="6D8" spMsgID="1" servicePlatform="010">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="481" messageID="1" spAppID="641" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="482" messageID="1" spAppID="642" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="483" messageID="1" spAppID="643" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="484" messageID="1" spAppID="644" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="485" messageID="1" spAppID="648" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+
+    <message applicationID="486" messageID="1" spAppID="645" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="487" messageID="1" spAppID="646" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="488" messageID="1" spAppID="647" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+
+    <message applicationID="489" messageID="1" spAppID="649" spMsgID="1" servicePlatform="009">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1"/>
+        </protocols>
+    </message>
+    <message applicationID="491" messageID="1" spAppID="761" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="492" messageID="1" spAppID="763" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="493" messageID="1" spAppID="651" spMsgID="1" servicePlatform="008">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="494" messageID="1" spAppID="762" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A1" messageID="1" spAppID="721" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A2" messageID="1" spAppID="722" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A3" messageID="1" spAppID="723" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A4" messageID="1" spAppID="725" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A5" messageID="1" spAppID="783" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A6" messageID="1" spAppID="751" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A7" messageID="1" spAppID="752" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+    <message applicationID="4A8" messageID="1" spAppID="726" spMsgID="1" servicePlatform="007">
+        <protocols>
+            <protocol clientVersion="1.1" serviceVersion="1.1">
+            </protocol>
+        </protocols>
+    </message>
+</protocol>

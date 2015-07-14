@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <context>
+        <module name="com.saicmotor.framework.context.module.interceptor.InterceptorConfigModule"/>
+        <module name="com.saicmotor.framework.context.module.lifecycle.LifecycleModule"/>
+        <module name="com.saicmotor.framework.context.module.resource.ResourceModule"/>
+        <module name="com.saicmotor.framework.context.module.service.ServiceModule">
+            <!-- <property name="com.saicmotor.framework.cache.ICacheService">
+               <props>
+                   <prop key="default">name2</prop>
+                   <prop key="name1">com.saicmotor.framework.cache.ehcache.EhcacheCacheService</prop>
+                   <prop key="name2">com.saicmotor.framework.cache.memcached.MemcachedCacheService</prop>
+               </props>
+           </property> -->
+        </module>
+        <module name="com.saicmotor.framework.context.module.transaction.TransactionModule">
+            <property name="datasource">
+                <props>
+                    <prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+                    <prop key="hibernate.connection.url">jdbc:oracle:thin:@10.91.227.48:1521:TSGP</prop>
+                    <prop key="hibernate.connection.username">tsip550</prop>
+                    <prop key="hibernate.connection.password">tsip550</prop>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                    <prop key="hibernate.show_sql">false</prop>
+                    <prop key="hibernate.format_sql">true</prop>
+                    <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                </props>
+            </property>
+            <!--<property name="jndiEnvironment">-->
+            <!--<props>-->
+            <!--<prop key="jndi.name">jdbc/tsip</prop>-->
+            <!--<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>-->
+            <!--<prop key="hibernate.show_sql">false</prop>-->
+            <!--<prop key="hibernate.format_sql">true</prop>-->
+            <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
+            <!--</props>-->
+            <!--</property>-->
+        </module>
+        <module	name="com.saicmotor.framework.i18n.registry.module.I18NGuiceModule">
+            <property name="current">
+                <props>
+                    <!-- <prop key="impl">MultiI18NServiceImpl</prop> -->
+                    <prop key="impl">SimpleI18NServiceImpl</prop>
+                </props>
+            </property>
+        </module>
+
+
+        <!--<module name="com.saicmotor.framework.multichannel.json.JsonModule"/>-->
+
+        <!--<module name="com.saicmotor.framework.logging.registry.module.LoggingGuiceModule"/>  -->
+
+        <!--<module name="com.saicmotor.framework.scheduler.registry.module.SchedulerGuiceModule"/>-->
+        <module name="com.saicmotor.framework.dao.registry.module.DaoModule">
+            <property name="daoconfig">
+                <props>
+                    <prop key="pageSize">20</prop>
+                    <prop key="ormType">mybatis</prop>
+                </props>
+            </property>
+        </module>
+    </context>
+
+
+    <!-- 注册应用和测试组件的包名 -->
+    <component>
+        <!-- 可以有多个package -->
+
+
+        <package name="com.saicmotor.telematics.tsgp.tsip.otamsghandler.servicecatalog"/>
+
+    </component>
+
+    <!-- 注册事务和拦截器 -->
+    <aop>
+        <pointcut name="servicePC" value="execution(* *..service.*Service*.*(..))" />
+        <transaction type="jpa" pointcut="servicePC">
+            <attributes>
+                <method name="*" propagation="REQUIRED" />
+                <method name="find*" read-only="true" />
+                <method name="get*" read-only="true" />
+            </attributes>
+        </transaction>
+    </aop>
+zz</project>

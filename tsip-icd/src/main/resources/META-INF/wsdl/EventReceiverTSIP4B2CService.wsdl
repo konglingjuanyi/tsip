@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://saicmotor.com/mce550/tsgp/tsip/msg/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://saicmotor.com/mce550/tsgp/tsip/msg/v1"
+             name="EventReceiverTSIP4B2CService">
+    <documentation>
+        EventReceiverTSIP4B2CService: Service provided by TSIP for receiving the event message from B2C.
+        Roles: Provider = TSIP, Consumer = B2C.
+    </documentation>
+    <types>
+        <xs:schema xmlns:tns="http://saicmotor.com/mce550/tsgp/tsip/msg/v1"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+                   xmlns:cmm="http://saicmotor.com/mce550/tsgp/tsip/common/v1"
+                   targetNamespace="http://saicmotor.com/mce550/tsgp/tsip/msg/v1">
+            <xs:import namespace="http://saicmotor.com/mce550/tsgp/tsip/common/v1" schemaLocation="CommonModel.xsd"/>
+            <xs:element name="sendDataRequest" type="tns:SendDataRequest"/>
+            <xs:element name="sendDataResponse" type="tns:SendDataResponse"/>
+            
+            <xs:complexType name="SendDataRequest">
+                <xs:sequence>
+                    <xs:element name="eventMessage" type="cmm:EventMessage"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SendDataResponse">
+                <xs:sequence>
+                    <xs:element name="result" type="cmm:EventMessage"/>
+                </xs:sequence>
+            </xs:complexType>
+
+        </xs:schema>
+    </types>
+    <message name="SendDataRequest">
+        <part name="parameters" element="tns:sendDataRequest"/>
+    </message>
+    <message name="SendDataResponse">
+        <part name="parameters" element="tns:sendDataResponse"/>
+    </message>
+
+    <portType name="EventReceiverTSIP4B2C">
+        <operation name="sendDataTSIP">
+            <input message="tns:SendDataRequest"/>
+            <output message="tns:SendDataResponse"/>
+        </operation>
+    </portType>
+    <binding name="EventReceiverTSIP4B2CPortBinding" type="tns:EventReceiverTSIP4B2C">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="sendDataTSIP">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="EventReceiverTSIP4B2CService">
+        <port name="EventReceiverTSIP4B2CPort" binding="tns:EventReceiverTSIP4B2CPortBinding">
+            <soap:address location="http://localhost:9080/tsip/services/EventReceiverTSIP4B2C"/>
+        </port>
+    </service>
+</definitions>
