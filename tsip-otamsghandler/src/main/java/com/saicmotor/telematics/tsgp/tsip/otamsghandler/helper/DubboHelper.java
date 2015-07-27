@@ -17,6 +17,8 @@ public class DubboHelper {
 
     public static List<String> aidList = new ArrayList<String>();
 
+    private static  Map<String,String> aidMap = new HashMap<String,String>();
+
     /**
      * 存放各版本对应的AdapterService实例
      */
