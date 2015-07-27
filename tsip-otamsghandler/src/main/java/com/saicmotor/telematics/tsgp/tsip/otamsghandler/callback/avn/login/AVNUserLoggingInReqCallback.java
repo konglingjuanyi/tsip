@@ -12,6 +12,7 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.OTACallback;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.AdapterHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.OTATransform;
+import org.springframework.stereotype.Service;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +21,7 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.OTATransform;
  * Time: 上午2:03
  * To change this template use File | Settings | File Templates.
  */
+@Service
 public class AVNUserLoggingInReqCallback extends OTACallback {
 
     @Override

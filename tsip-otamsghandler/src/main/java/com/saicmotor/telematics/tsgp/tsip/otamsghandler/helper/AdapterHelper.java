@@ -54,15 +54,15 @@ public class AdapterHelper {
     private static Map<String, Class> requestObjMap = new HashMap<String, Class>();
 
     static {
-        adapterMap.put(Cfg.PLATFORM_AVN + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(AVNAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_B2C + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(B2CAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_CC + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(CCAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(TCMPAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_WXG4AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WXG4ASAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_ASM + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WXG4ASAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(ASAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_ISP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(ISPAdapterServiceImpl.class));
-        adapterMap.put(Cfg.PLATFORM_WEATHER + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WeatherAdapterServiceImpl.class));
+        adapterMap.put(Cfg.PLATFORM_AVN + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, AVNAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_B2C + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, B2CAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_CC + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, CCAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, TCMPAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_WXG4AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, WXG4ASAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_ASM + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, WXG4ASAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, ASAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_ISP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, ISPAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_WEATHER + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, WeatherAdapterServiceImpl.class);
 
         requestObjMap.put(Cfg.PLATFORM_AVN + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, AVN_OTARequest.class);
         requestObjMap.put(Cfg.PLATFORM_B2C + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, B2C_OTARequest.class);
@@ -178,7 +178,7 @@ public class AdapterHelper {
     public static Object adapterReceive(String platform, String version, String source) {
         Object adapterImpl = getAdapter(platform, version);
         try {
-            MethodUtils.setCacheMethods(true);
+           // MethodUtils.setCacheMethods(true);
             Object obj = MethodUtils.invokeMethod(adapterImpl, "receive",
                     source.getBytes("UTF-8"));
             return obj;
@@ -200,7 +200,7 @@ public class AdapterHelper {
         //获取adapterService实现类
         Object adapterImpl = getAdapter(platform, version);
         try {
-            MethodUtils.setCacheMethods(true);
+//            MethodUtils.setCacheMethods(true);
             byte[] ret = (byte[]) MethodUtils.invokeMethod(adapterImpl, "getBytesData",
                     new Object[]{obj, "1"});
             return ret;

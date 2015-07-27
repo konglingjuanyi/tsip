@@ -52,6 +52,7 @@ public final class MessageHelper {
 
 //            String location = GuiceContext.getInstance().getConfig().getProperties().get("ota_config_location").get("value").toString();
             String location = SpringContext.getInstance().getProperty("ota_config_location.value");
+//            String location = "config/ota";
             List<String> fileTypes = new ArrayList<String>();
             fileTypes.add("xml");
             List<File> configFiles = FileScanner.scan(location, fileTypes);

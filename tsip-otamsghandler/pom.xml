@@ -17,21 +17,20 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>com.saicmotor.telematics.tsgp.tsip</groupId>
       <artifactId>tsip-httpServ</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.saicmotor.telematics.framework.core</groupId>
       <artifactId>core-common</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.zxq.iov.cloud.sp</groupId>
+      <artifactId>sp-mds-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -83,73 +82,73 @@
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-mp.v1.1</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-cc</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-b2c</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-vehicleProtection.v1.1</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-message.v1.1</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-navi.v1.1</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-roadbook.v1.1</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-tbox.v1.1</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-tcmp</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-as</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-wxg4as</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.adapter</groupId>
       <artifactId>adapter-isp</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-weather</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.tsip</groupId>
       <artifactId>tsip-api</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>commons-logging</groupId>

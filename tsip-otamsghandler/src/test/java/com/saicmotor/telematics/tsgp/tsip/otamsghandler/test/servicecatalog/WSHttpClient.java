@@ -1,6 +1,5 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.test.servicecatalog;
 
-import com.saicmotor.framework.util.DateUtils;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

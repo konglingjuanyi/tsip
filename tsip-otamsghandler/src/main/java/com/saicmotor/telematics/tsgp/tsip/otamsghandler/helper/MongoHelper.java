@@ -12,11 +12,14 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.saicmotor.telematics.framework.core.common.SpringContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.TSIPException;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * MongoDB的帮助类
@@ -43,17 +46,20 @@ public class MongoHelper {
 
 //            String str = GuiceContext.getInstance().getConfig().getProperties().get(MONGO_KEY).get(HOST_KEY).toString();
             String str = SpringContext.getInstance().getProperty("mongoclient.host");
-            String[] array = str.split(",");
-            List<ServerAddress> list = new ArrayList<ServerAddress>();
-            for(int i=0;i<array.length;i++) {
-                String tmp = array[i];
-                ServerAddress address = new ServerAddress(tmp.split(":")[0],Integer.parseInt(tmp.split(":")[1]));
-                list.add(address);
+//            String str = "localhost:27017";
+            if(StringUtils.isNotEmpty(str) && str.contains(",")){
+                String[] array = str.split(",");
+                List<ServerAddress> list = new ArrayList<ServerAddress>();
+                for(int i=0;i<array.length;i++) {
+                    String tmp = array[i];
+                    ServerAddress address = new ServerAddress(tmp.split(":")[0],Integer.parseInt(tmp.split(":")[1]));
+                    list.add(address);
+                }
+                MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
+                builder.alwaysUseMBeans(false);
+                client = new MongoClient(list, builder.build());
+                LOGGER.debug("MongoClient initialized");
             }
-            MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
-            builder.alwaysUseMBeans(false);
-            client = new MongoClient(list, builder.build());
-            LOGGER.debug("MongoClient initialized");
         } catch (Exception e) {
             LOGGER.error("MongoClient initialization failure!", e);
             throw new TSIPException("MongoClient initialization failure!", e);
@@ -71,4 +77,8 @@ public class MongoHelper {
 
         return client;
     }
+
+//    public static void main(String[] args) {
+//        initMongoClient();
+//    }
 }

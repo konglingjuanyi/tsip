@@ -1,6 +1,5 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.test.servicecatalog;
 
-import com.saicmotor.framework.util.DateUtils;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -113,7 +112,6 @@ public class ActiveCode {
 	 *            AVN序列号，16位字符
 	 * @param tboxsn
 	 *            TBOX序列号，10位字符
-	 * @param day
 	 *            当前日期，，从2012-01-01T00:00:00 UTC开始的天数
 	 * @return String：激活码，16位字符；2：VIN码位数不对；3：iccid位数不对；4：AVN序列号位数不对；
 	 *         5：TBOX序列号不对；6：VIN码倒数第三位不是数字；8：VIN码最后一位非数字；10：MD5出错

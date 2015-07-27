@@ -47,6 +47,7 @@ public class MPUserLoggingInReqCallback extends OTACallback {
                 //编码服务端请求对象为字符串
                 String serviceSource = changeObj2String(protocol.getServicePlatform(), protocol.getServiceVersion(), serviceObj);
 
+                //TODO CALL DUBBO SERVICE
                 //调用服务
                 String serviceResponse = invokeService(protocol, serviceSource);
 

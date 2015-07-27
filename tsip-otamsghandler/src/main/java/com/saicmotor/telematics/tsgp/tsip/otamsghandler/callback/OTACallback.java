@@ -48,10 +48,11 @@ public class OTACallback {
         try {
             //转换请求对象为服务端对象
             Object serviceObj = changeClientObj2ServerObj(protocol, requestObject);
-
+//
             //编码服务端请求对象为字符串
             String serviceSource = changeObj2String(protocol.getServicePlatform(), protocol.getServiceVersion(), serviceObj);
 
+            //TODO CALL DUBBO SERVICE
             //调用服务
             String serviceResponse = invokeService(protocol, serviceSource);
 

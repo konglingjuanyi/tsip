@@ -29,10 +29,13 @@ public class InterceptorService {
 
 //        for (Map.Entry<String, String> entry : map.entrySet()) {
 //            String className = entry.getValue();
-            String className = SpringContext.getInstance().getProperty("Interceptor.212_1.1");
+//            String className = SpringContext.getInstance().getProperty("Interceptor.212_1.1");
+//            String className = "com.saicmotor.telematics.tsgp.tsip.otamsghandler.service.intercepter.Aid212Interceptor";
             try {
-                Class<?> clazz = Class.forName(className);
-                IInterceptor interceptor = (IInterceptor) SpringContext.getInstance().getBean(clazz);
+//                Class<?> clazz = Class.forName(className);
+//               IInterceptor interceptor = (IInterceptor) SpringContext.getInstance().getBean(clazz);
+                //TODO SpringContext.getInstance()未能加载ApplicationContext,Properties等信息
+                IInterceptor interceptor = SpringContext.getInstance().getBean(Aid212Interceptor.class);
                 interceptorMap.put("Interceptor.212_1.1", interceptor);
 //                interceptorMap.put("212_1.1", interceptor);
 //                interceptorMap.put(entry.getKey(), interceptor);初始版本代码
