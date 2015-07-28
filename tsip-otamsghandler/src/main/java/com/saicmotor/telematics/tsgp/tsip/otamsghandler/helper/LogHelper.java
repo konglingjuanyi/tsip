@@ -7,6 +7,7 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper;
 
 import com.saicmotor.telematics.framework.core.common.SpringContext;
+import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.framework.core.exception.GeneralRuntimeException;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ErrorMessageHelper;
@@ -152,6 +153,36 @@ public class LogHelper {
     public static void info(Logger logger, String aid, Integer mid,  String vin, String uid,String content, String from,String clientIP, String serviceUrl,String target,String token){
         logger.info(formatTSIPLog(aid,mid,vin,uid,content,from,target,clientIP,serviceUrl,token));
     }
+
+//    /**
+//     * 记录异常日志
+//     * @param logger
+//     * @param context
+//     * @param exception
+//     */
+//    public static void error(Logger logger, RequestContext context, GeneralRuntimeException exception){
+//
+//        String stackTrace = "";
+//        String message = "";
+//        if (exception != null) {
+//            //从errorMessageService获取
+//            message = ErrorMessageHelper.getErrorMessage(exception.getCode());//ErrorMessage em = errorMessageService.findByErrorCode(Integer.valueOf(exception.getErrorCode()));
+//            StringWriter writer = new StringWriter();
+//            exception.printStackTrace(new PrintWriter(writer));
+//            writer.flush();
+//            stackTrace = "\n" + writer.toString();
+//            try {
+//                writer.close();
+//            } catch (Exception e1) {
+//                LOGGER.error("关闭流失败", e1);
+//            }
+//        }
+//
+//        logger.error(String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%s",
+//                DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss SSS"), Thread.currentThread().getId(),
+//                exception.getCode(), message, context.getAid(), context.getMid(), context.getVin(), context.getUid(),
+//                context.getToken(), stackTrace));
+//    }
 
     /**
      * 记录异常日志
