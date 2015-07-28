@@ -40,6 +40,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.saicmotor.telematics.tsgp.sp</groupId>
+      <artifactId>sp-roadbook-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>dubbo</artifactId>
     </dependency>
@@ -157,11 +163,7 @@
       <version>${project.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.saicmotor.telematics.tsgp.sp</groupId>
-      <artifactId>sp-roadbook-api</artifactId>
-      <version>${project.version}</version>
-    </dependency>
+
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
