@@ -34,6 +34,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.zxq.iov.cloud.sec</groupId>
+      <artifactId>sec-vowner-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.zxq.iov.cloud.sp</groupId>
       <artifactId>sp-vp-api</artifactId>
       <version>${project.version}</version>

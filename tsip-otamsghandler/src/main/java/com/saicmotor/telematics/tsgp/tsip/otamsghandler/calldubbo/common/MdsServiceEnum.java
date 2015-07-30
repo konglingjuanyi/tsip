@@ -4,7 +4,8 @@ package com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common;
  * Created by Administrator on 2015/7/27.
  */
 public enum MdsServiceEnum {
-    GETAVNACTIVATIONCODE("5F7"),
+    MP_GETAVNACTIVATIONCODE("5F7"),
+    B2C_GETAVNACTIVATIONCODE("4A3"),
     AVNACTIVATE("202"),
     AVNACTIVATESTATUSCHECK("4A4"),
     VEHICLEMESPART4OPEN("766"),

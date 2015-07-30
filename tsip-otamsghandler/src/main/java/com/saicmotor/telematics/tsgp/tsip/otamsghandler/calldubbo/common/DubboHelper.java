@@ -26,6 +26,7 @@ public class DubboHelper {
 
     static {
         aidMdsList.add("202");
+        aidMdsList.add("4A3");
         aidMdsList.add("5F7");
         aidMdsList.add("4A4");
         aidMdsList.add("766");
