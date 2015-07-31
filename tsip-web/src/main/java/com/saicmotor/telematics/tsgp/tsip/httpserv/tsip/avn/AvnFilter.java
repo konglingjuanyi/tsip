@@ -99,7 +99,7 @@ public class AvnFilter implements Filter {
     public void writeResult(String charset, String result,HttpServletResponse rep) {
         try {
             rep.setContentType("text/html;charset=UTF-8");
-            rep.setCharacterEncoding("UTF-8");
+            rep.setCharacterEncoding(CHARSET);
             if(StringUtils.isNotEmpty(result))
                 rep.getOutputStream().write(result.getBytes(charset));
             rep.flushBuffer();
@@ -136,7 +136,7 @@ public class AvnFilter implements Filter {
 //        String from = code.substring(0, 3);
 //        String source = code.substring(3);
         IApplicationService applicationService = SpringContext.getInstance().getBean(ApplicationServiceImpl.class);
-        String result = applicationService.execute(Cfg.PL_STR_MAP.get("004"), code, "004");
+        String result = applicationService.execute(Cfg.PL_STR_MAP.get("005"), code, "005");
 //        String result = applicationService.execute("TCMP",code,"005");
         return result;
     }

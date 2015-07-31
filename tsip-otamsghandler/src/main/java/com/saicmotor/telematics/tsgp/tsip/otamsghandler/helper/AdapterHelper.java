@@ -18,6 +18,7 @@ import com.saicmotor.telematics.tsgp.otaadapter.cc.entity.dispatcher.CC_OTAReque
 import com.saicmotor.telematics.tsgp.otaadapter.cc.service.CCAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.isp.entity.dispatcher.ISP_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.isp.service.ISPAdapterServiceImpl;
+import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.service.MPAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.dispatcher.TCMP_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.service.TCMPAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.wxg4as.entity.dispatcher.WXG4AS_OTARequest;
@@ -55,6 +56,7 @@ public class AdapterHelper {
 
     static {
         adapterMap.put(Cfg.PLATFORM_AVN + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, AVNAdapterServiceImpl.class);
+        adapterMap.put(Cfg.PLATFORM_MP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, MPAdapterServiceImpl.class);
         adapterMap.put(Cfg.PLATFORM_B2C + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, B2CAdapterServiceImpl.class);
         adapterMap.put(Cfg.PLATFORM_CC + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, CCAdapterServiceImpl.class);
         adapterMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, TCMPAdapterServiceImpl.class);
@@ -147,6 +149,7 @@ public class AdapterHelper {
     public static Object getAdapter(String platform, String version) {
         String key = platform + Cfg.CONNECTOR + version;
         Object adapterImpl = adapterMap.get(key);
+//        Object adapterImpl = new MPAdapterServiceImpl();
         if (adapterImpl == null) {
             throw new AdapterException("Adapter不支持:" + key);
         }
