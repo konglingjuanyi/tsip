@@ -115,6 +115,12 @@
 
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
+      <artifactId>adapter-asn</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.saicmotor.telematics.tsgp.otaadapter</groupId>
       <artifactId>adapter-vehicleProtection.v1.1</artifactId>
       <version>${project.version}</version>
     </dependency>

@@ -1,35 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-                           http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+                           http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
 
 	<aop:aspectj-autoproxy proxy-target-class="false" />
 	<bean id="exceptionAspect"
 		class="com.saicmotor.telematics.framework.core.aspect.RpcExceptionAspect" />
+	<!-- 应用配置，dubbo.app.name、dubbo.app.org、dubbo.app.owner定义在配	置文件中 -->
+	<!--<dubbo:application name="${dubbo.app.name}"-->
+					   <!--organization="${dubbo.app.org}" owner="${dubbo.app.owner}"/>-->
+	<!--<dubbo:application name="zxq-mds-service"/>-->
 
+	<!--协议配置，dubbo.protocol.name、dubbo.protocol.port和	dubbo.protocol.server定义在配置文件中，分别指使用协议(如dubbo)、服务端	口、服务端实现类型(如netty)。-->
+	<!--<dubbo:protocol name="${dubbo.protocol.name}"-->
+					<!--port="${dubbo.protocol.port}" server="${dubbo.protocol.server}" />-->
+	<!--<dubbo:protocol name="dubbo"-->
+					<!--port="20902" server="netty" />-->
+
+	<!--注册中心配置，dubbo.registry.protocol 、dubbo.registry.address 、dubbo.registry.client 、dubbo.group 定义在配置文件中，分别指注册中心协议（zookeeper）、注册中心地址、注册中心客户端（zookeeper）、注册中心分组			-->
+	<!--<dubbo:registry id="zookeeper_registry" protocol="${dubbo.registry.protocol}"-->
+					<!--address="${dubbo.registry.address}"-->
+					<!--client="${dubbo.registry.client}" group="${dubbo.group}" />-->
+	<!--<dubbo:registry id="zookeeper_registry" protocol="zookeeper"-->
+					<!--address="10.25.3.107:4180"-->
+					<!--client="zkclient" group="dev" />-->
 	<!-- 协议配置 -->
-	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />
+	<dubbo:protocol name="dubbo" port="20885" />
 
 	<!-- 监控中心配置 -->
-	<dubbo:monitor protocol="${dubbo.monitor.protocol}" />
+	<dubbo:monitor protocol="registry" />
 
 	<!-- 应用配置 -->
-	<dubbo:application name="${dubbo.app.name}" organization="${dubbo.app.org}" owner="${dubbo.app.owner}" />
+	<dubbo:application name="tsgp-tsip-service" organization="saicmotor" owner="tsgp" />
 
 	<!-- 注册中心配置 -->
-	<dubbo:registry id="zookeeper_registry" protocol="${dubbo.registry.protocol}"
-		address="${dubbo.registry.address}" client="${dubbo.registry.client}"
-		group="${dubbo.group}" />
+	<dubbo:registry id="zookeeper_registry" protocol="zookeeper"
+					address="zookeeper://10.91.230.91:2181" client="zkclient"
+					group="dev" />
 
-    <!-- dubbo server 端配置
-		 <bean id="applicationServiceV2"
-		class="com.saicmotor.telematics.message.v1_2.ApplicationServiceImpl" />
-		<dubbo:service
-		interface="com.saicmotor.telematics.tsgp.sp.message.api.IApplicationService"
-		ref="applicationServiceV2" version="1.1" loadbalance="roundrobin"
-		retries="0" timeout="30000" registry="${dubbo.service.registry}" /> 
- -->
+	<!--远程服务代理配置-->
+	<dubbo:reference id="activateSimCardService"  check="false" interface="com.zxq.iov.cloud.sp.mds.api.IActivateSimCardService" version="1.1"/>
+	<dubbo:reference id="addOrRemoveConcernCitiesService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IAddOrRemoveConcernCitiesService" version="1.1"/>
+	<dubbo:reference id="aSGetVehicleDetailService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IASGetVehicleDetailService" version="1.1"/>
+	<dubbo:reference id="aSGetVehicleListService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IASGetVehicleListService" version="1.1"/>
+	<dubbo:reference id="aSVehicleCheckedService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IASVehicleCheckedService" version="1.1"/>
+	<dubbo:reference id="avnActivateService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IAvnActivateService" version="1.1"/>
+	<dubbo:reference id="aVNActivateStatusCheckService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IAVNActivateStatusCheckService" version="1.1"/>
+	<dubbo:reference id="getAvnActivationCodeService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IGetAvnActivationCodeService" version="1.1"/>
+	<dubbo:reference id="getCityListService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IGetCityListService" version="1.1"/>
+	<dubbo:reference id="updateVehicleFromTCMPService" check="false" interface="com.zxq.iov.cloud.sp.mds.api.IUpdateVehicleFromTCMPService" version="1.1"/>
+	<dubbo:reference id="setPinCodeService" interface="com.zxq.iov.cloud.sp.mds.api.ISetPinCodeService" version="1.1"/>
+	<dubbo:reference id="mPControlGradeService" interface="com.zxq.iov.cloud.sp.mds.api.IMPControlGradeService" version="1.1"/>
+	<dubbo:reference id="mPUserFeedBackService" interface="com.zxq.iov.cloud.sp.mds.api.IMPUserFeedBackService" version="1.1"/>
+	<dubbo:reference id="mPUserInfoQueryService" interface="com.zxq.iov.cloud.sp.mds.api.IMPUserInfoQueryService" version="1.1"/>
+	<dubbo:reference id="mPUserInfoUpdateService" interface="com.zxq.iov.cloud.sp.mds.api.IMPUserInfoUpdateService" version="1.1"/>
+	<dubbo:reference id="mPVehicleInfoQueryService" interface="com.zxq.iov.cloud.sp.mds.api.IMPVehicleInfoQueryService" version="1.1"/>
+	<dubbo:reference id="mPVehicleInfoUpdateService" interface="com.zxq.iov.cloud.sp.mds.api.IMPVehicleInfoUpdateService" version="1.1"/>
+
+	<dubbo:reference id="avnService" interface="com.zxq.iov.cloud.sp.mds.api.ITbAvnService" version="1.1"/>
+	<dubbo:reference id="contactService" interface="com.zxq.iov.cloud.sp.mds.api.ITbContactService" version="1.1"/>
+	<dubbo:reference id="simCardStatusService" interface="com.zxq.iov.cloud.sp.mds.api.ITbSimCardStatusService" version="1.1"/>
+	<dubbo:reference id="tboxService" interface="com.zxq.iov.cloud.sp.mds.api.ITbTboxService" version="1.1"/>
+	<dubbo:reference id="userCodeService" interface="com.zxq.iov.cloud.sp.mds.api.ITbUserCodeService" version="1.1"/>
+	<dubbo:reference id="userControlGradeService" interface="com.zxq.iov.cloud.sp.mds.api.ITbUserControlGradeService" version="1.1"/>
+	<dubbo:reference id="userFeedbackService" interface="com.zxq.iov.cloud.sp.mds.api.ITbUserFeedbackService" version="1.1"/>
+	<dubbo:reference id="userInfoService" interface="com.zxq.iov.cloud.sp.mds.api.ITbUserInfoService" version="1.1"/>
+	<dubbo:reference id="userMobileService" interface="com.zxq.iov.cloud.sp.mds.api.ITbUserMobileService" version="1.1"/>
+	<dubbo:reference id="userService" interface="com.zxq.iov.cloud.sp.mds.api.ITbUserService" version="1.1"/>
+
+	<dubbo:reference id="vehicleBrandService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehicleBrandService" version="1.1"/>
+	<dubbo:reference id="vehicleMaterialService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehicleMaterialService" version="1.1"/>
+	<dubbo:reference id="vehicleMesService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehicleMesService" version="1.1"/>
+	<dubbo:reference id="vehicleModelService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehicleModelService" version="1.1"/>
+	<dubbo:reference id="vehiclePackageService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehiclePackageService" version="1.1"/>
+	<dubbo:reference id="vehicleSaleService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehicleSaleService" version="1.1"/>
+	<dubbo:reference id="vehicleService" interface="com.zxq.iov.cloud.sp.mds.api.ITbVehicleService" version="1.1"/>
+	<dubbo:reference id="updateSimActiveStatusService" interface="com.zxq.iov.cloud.sp.mds.api.IUpdateSimActiveStatusService" version="1.1"/>
+	<dubbo:reference id="vehicleMesPart4OpenService" interface="com.zxq.iov.cloud.sp.mds.api.IVehicleMesPart4OpenService" version="1.1"/>
+	<dubbo:reference id="vehicleSysSettingService" interface="com.zxq.iov.cloud.sp.mds.api.IVehicleSysSettingService" version="1.1"/>
+	<dubbo:reference id="getVehicleBrandModelService" interface="com.zxq.iov.cloud.sp.mds.api.IGetVehicleBrandModelService" version="1.1"/>
+	<dubbo:reference id="addPersonalVehicleService" interface="com.zxq.iov.cloud.sp.mds.api.IAddPersonalVehicleService" version="1.1"/>
+	<dubbo:reference id="addOrgVehicleService" interface="com.zxq.iov.cloud.sp.mds.api.IAddOrgVehicleService" version="1.1"/>
+	<dubbo:reference id="setUserMobilePhoneService" interface="com.zxq.iov.cloud.sp.mds.api.ISetUserMobilePhoneService" version="1.1"/>
+	<dubbo:reference id="mPFastRegisterService" interface="com.zxq.iov.cloud.sp.mds.api.IMPFastRegisterService" version="1.1"/>
+	<dubbo:reference id="UpdatePasswordService" interface="com.zxq.iov.cloud.sp.mds.api.IUpdatePasswordService" version="1.1"/>
 </beans>

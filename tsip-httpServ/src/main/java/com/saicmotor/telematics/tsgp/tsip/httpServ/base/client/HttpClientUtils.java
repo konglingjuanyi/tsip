@@ -49,7 +49,7 @@ public class HttpClientUtils {
         cm.setMaxTotal(MAX_CONN_NUM);
         // 将每个路由基础的连接增加到20
         cm.setDefaultMaxPerRoute(20);
-        new IdleConnectionMonitorThread(cm);
+//        new IdleConnectionMonitorThread(cm);
     }
 
 
@@ -143,43 +143,43 @@ public class HttpClientUtils {
         }
     }
 }
-
-class IdleConnectionMonitorThread extends Thread {
-    private final PoolingHttpClientConnectionManager connMgr;
-    private volatile boolean shutdown;
-
-    public IdleConnectionMonitorThread(PoolingHttpClientConnectionManager connMgr) {
-        super();
-        this.setName("idle-connection-monitor");
-        this.setDaemon(true);
-        this.connMgr = connMgr;
-        this.start();
-    }
-
-    @Override
-    public void run() {
-        try {
-            while (!shutdown) {
-                synchronized (this) {
-                    wait(60 * 1000);
-                    // Close expired connections
-                    connMgr.closeExpiredConnections();
-                    // Optionally, close connections
-                    // that have been idle longer than 30 sec
-                    connMgr.closeIdleConnections(60, TimeUnit.SECONDS);
-                }
-            }
-        } catch (InterruptedException ex) {
-            // terminate
-        }
-    }
-
-    public void shutdown() {
-        synchronized (this) {
-            shutdown = true;
-            notifyAll();
-        }
-    }
-}
+//
+//class IdleConnectionMonitorThread extends Thread {
+//    private final PoolingHttpClientConnectionManager connMgr;
+//    private volatile boolean shutdown;
+//
+//    public IdleConnectionMonitorThread(PoolingHttpClientConnectionManager connMgr) {
+//        super();
+//        this.setName("idle-connection-monitor");
+//        this.setDaemon(true);
+//        this.connMgr = connMgr;
+//        this.start();
+//    }
+//
+//    @Override
+//    public void run() {
+//        try {
+//            while (!shutdown) {
+//                synchronized (this) {
+//                    wait(60 * 1000);
+//                    // Close expired connections
+//                    connMgr.closeExpiredConnections();
+//                    // Optionally, close connections
+//                    // that have been idle longer than 30 sec
+//                    connMgr.closeIdleConnections(60, TimeUnit.SECONDS);
+//                }
+//            }
+//        } catch (InterruptedException ex) {
+//            // terminate
+//        }
+//    }
+//
+//    public void shutdown() {
+//        synchronized (this) {
+//            shutdown = true;
+//            notifyAll();
+//        }
+//    }
+//}
 
 

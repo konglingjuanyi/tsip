@@ -19,12 +19,11 @@ import org.slf4j.LoggerFactory;
 /**
  * 根据Json请求参数运行服务方法
  */
-@SuppressWarnings("unchecked")
 public class TSIPServiceExecutor extends BaseServiceExecutor {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TSIPServiceExecutor.class);
 
-    protected  String invokeService(String source){
+    protected String invokeService(String source){
         String platformID = source.substring(0,3);
         source = source.substring(3);
         LOGGER.debug("PlatformID:"+platformID);

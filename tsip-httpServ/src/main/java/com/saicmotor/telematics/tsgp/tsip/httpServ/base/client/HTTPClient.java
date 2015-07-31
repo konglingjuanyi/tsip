@@ -55,7 +55,7 @@ public class HTTPClient implements IClient{
      * @return
      * @throws IOException
      */
-    public String sendDataBak(String address,String source,Integer connectionTimeoutMillis, Integer socketTimeoutMillis ) throws IOException {
+    public String sendData(String address,String source,Integer connectionTimeoutMillis, Integer socketTimeoutMillis ) throws IOException {
         HttpURLConnection urlConn=null;
         try{
             URL url = new URL(address);
@@ -68,16 +68,16 @@ public class HTTPClient implements IClient{
             urlConn.setRequestProperty("Content-type","text/html");
             urlConn.setRequestProperty("Connection","close");
             urlConn.setRequestMethod("POST");
-            if(connectionTimeoutMillis!=null){
-                urlConn.setConnectTimeout(connectionTimeoutMillis);
-            }else {
-                urlConn.setConnectTimeout(30000);
-            }
-            if(socketTimeoutMillis!=null){
-                urlConn.setReadTimeout(socketTimeoutMillis);
-            }else {
-                urlConn.setReadTimeout(30000);
-            }
+//            if(connectionTimeoutMillis!=null){
+//                urlConn.setConnectTimeout(connectionTimeoutMillis);
+//            }else {
+//                urlConn.setConnectTimeout(30000);
+//            }
+//            if(socketTimeoutMillis!=null){
+//                urlConn.setReadTimeout(socketTimeoutMillis);
+//            }else {
+//                urlConn.setReadTimeout(30000);
+//            }
 
             urlConn.connect();
 
@@ -101,24 +101,24 @@ public class HTTPClient implements IClient{
 
 
 
-    /**
-     * @see IClient
-     * @param address
-     * @param source OTA编码字符串
-     * @param connectionTimeoutMillis 连接超时设置
-     * @param socketTimeoutMillis socket超时设置
-     * @return
-     * @throws IOException
-     */
-    public String sendData(String address,String source,Integer connectionTimeoutMillis, Integer socketTimeoutMillis ) throws IOException {
-        String result = null;
-        try{
-            result = HttpClientUtils.sendPostRequest(address, source);
-        }catch (Exception ee){
-            LOGGER.debug("http client receive data: url=" + address + ", result=" + result);
-        }
-         return result;
-    }
+//    /**
+//     * @see IClient
+//     * @param address
+//     * @param source OTA编码字符串
+//     * @param connectionTimeoutMillis 连接超时设置
+//     * @param socketTimeoutMillis socket超时设置
+//     * @return
+//     * @throws IOException
+//     */
+//    public String sendData(String address,String source,Integer connectionTimeoutMillis, Integer socketTimeoutMillis ) throws IOException {
+//        String result = null;
+//        try{
+//            result = HttpClientUtils.sendPostRequest(address, source);
+//        }catch (Exception ee){
+//            LOGGER.debug("http client receive data: url=" + address + ", result=" + result);
+//        }
+//         return result;
+//    }
 
     public static byte[] readInputStream(InputStream inStream) throws IOException {
         ByteArrayOutputStream outStream=null;

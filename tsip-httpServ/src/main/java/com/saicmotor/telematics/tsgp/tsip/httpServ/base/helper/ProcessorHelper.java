@@ -8,6 +8,8 @@
 package com.saicmotor.telematics.tsgp.tsip.httpserv.base.helper;
 
 import com.saicmotor.telematics.framework.core.common.ModelMap;
+import com.saicmotor.telematics.framework.core.common.SpringContext;
+import com.saicmotor.telematics.tsgp.tsip.httpserv.base.reader.ParameterPairContentReader;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.reader.RequestContentReader;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.reader.RequestContentReaderRegister;
 import org.slf4j.Logger;
@@ -37,7 +39,10 @@ public class ProcessorHelper {
 	 */
 	public void fillParameters(HttpServletRequest request, ModelMap params) {
 		LOGGER.debug("JsonPreocessorHelper.fillParameters:ContentType:" + RequestHelper.getContentType(request));
-		RequestContentReader reader = RequestContentReaderRegister.getInstance().getRequestReader(RequestHelper.getContentType(request));
+//		RequestContentReaderRegister rc = new RequestContentReaderRegister();
+//		RequestContentReaderRegister rcrr = SpringContext.getInstance().getBean(RequestContentReaderRegister.class);
+//		RequestContentReader reader = rcrr.getRequestReader(RequestHelper.getContentType(request));
+		RequestContentReader reader = new ParameterPairContentReader();
 		if(reader != null){
 			reader.readData(request, params, charset);
 		}	

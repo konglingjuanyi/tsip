@@ -41,35 +41,9 @@ public class ApplicationServiceImpl implements IApplicationService {
         LOGGER.debug("enter ApplicationService.execute()...");
         long start = System.currentTimeMillis();
         String requestBack = null;
-        RequestContext context = null;
+//        RequestContext context = null;
         try {
-//            try{
-                context = RequestContext.initContext("001", source);
-//            }catch (Exception e){
-//            }
-//            try{
-//                context = RequestContext.initContext("004", source);
-//            }catch (Exception e){
-//            }
-//            try{
-//                context = RequestContext.initContext("005", source);
-//            }catch (Exception e){
-//            }
-//            try{
-//                context = RequestContext.initContext("007", source);
-//            }catch (Exception e){
-//            }
-//            try{
-//                context = RequestContext.initContext("013", source);
-//            }catch (Exception e){
-//            }
-//            try{
-//                context = RequestContext.initContext("014", source);
-//            }catch (Exception e){
-//            }
-//            RequestContext context = RequestContext.initContext(platform, source);
-
-
+            RequestContext context = RequestContext.initContext(platform, source);
             if(!"113".equals(context.getAid())){
             //记录请求日志
                 //LogHelper.reportDataInfo(context.getAid(), context.getMid(), context.getVin(), source);

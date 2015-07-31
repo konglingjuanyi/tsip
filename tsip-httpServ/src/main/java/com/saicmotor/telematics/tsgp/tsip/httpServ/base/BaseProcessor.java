@@ -87,8 +87,7 @@ abstract public class BaseProcessor {
  
 		LOGGER.debug("Debug: Trimed URL :" + url);
 		
-		ModelMap<String, String> params = ContextManager.getContext()
-				.getModelMap();
+		ModelMap<String, String> params = new ModelMap<String, String>();
 		try {
 			this.processNormalCall(request, url, originalUrl, params);			 
 		}catch (Exception e) {

@@ -128,15 +128,16 @@ public abstract class BaseFilter implements Filter {
 		ModelMap<String, String> params = new ModelMap<String, String>();
 		try {
 			// 设置上下文中的环境变量
-			ContextManager.setContext(hRequest, hResponse, params);
+//			ContextManager.setContext(hRequest, hResponse, params);
             callProcess(hRequest,hResponse);
 		} catch (Exception e) {
             LOGGER.error("BaseFilter Running Error",e);
             throw new ServletException("BaseFilter Running Error",e);
-		} finally {			
-			// 清除上下文中的环境变量				
-			ContextManager.clearContext();
 		}
+//		finally {
+			// 清除上下文中的环境变量				
+//			ContextManager.clearContext();
+//		}
 	}
 	/**
 	 * 初始化URL

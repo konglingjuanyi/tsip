@@ -15,7 +15,6 @@ import com.saicmotor.telematics.tsgp.tsip.httpserv.base.helper.ProcessorHelper;
 /**
  * Json请求处理器，包括处理URL以及请求参数
  */
-@SuppressWarnings("unchecked")
 public class TSIPProcessor extends BaseProcessor {
 
     protected void initial(){

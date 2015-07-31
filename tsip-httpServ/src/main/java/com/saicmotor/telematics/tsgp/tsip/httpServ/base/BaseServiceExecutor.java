@@ -9,6 +9,7 @@ package com.saicmotor.telematics.tsgp.tsip.httpserv.base;
 
 import com.saicmotor.telematics.framework.core.common.MimeType;
 import com.saicmotor.telematics.framework.core.common.ModelMap;
+import com.saicmotor.telematics.framework.core.common.SpringContext;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.exception.HTTPServException;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.writer.IResponseWriter;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.writer.ResponseWriterRegister;
@@ -29,9 +30,9 @@ abstract  public class BaseServiceExecutor implements IBaseServiceExecutor {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseServiceExecutor.class);
 
-	protected HttpServletRequest request = ContextManager.getRequest();
+//	protected HttpServletRequest request = ContextManager.getRequest();
 
-	protected HttpServletResponse response = ContextManager.getResponse();
+//	protected HttpServletResponse response = ContextManager.getResponse();
 
 
 	public BaseServiceExecutor() {
@@ -47,7 +48,8 @@ abstract  public class BaseServiceExecutor implements IBaseServiceExecutor {
 		Object result = null;
 
 		Exception exception = null;
-
+		HttpServletRequest request = ContextManager.getRequest();
+		HttpServletResponse response = ContextManager.getResponse();
         LOGGER.debug("Session ID: "+request.getSession().getId());
 		ModelMap modelMap = ContextManager.getModelMap();
 
@@ -77,6 +79,7 @@ abstract  public class BaseServiceExecutor implements IBaseServiceExecutor {
     }
 
 	public void writeResult(String charset, String result,Throwable exception) {
+		HttpServletResponse response = ContextManager.getResponse();
 		String mimeType = MimeType.MIME_OF_TEXT_HTML;
 
 		// 向客户端写回结果数据	

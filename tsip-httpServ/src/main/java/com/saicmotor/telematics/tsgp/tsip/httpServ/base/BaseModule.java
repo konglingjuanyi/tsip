@@ -9,7 +9,6 @@
 //
 //import com.google.inject.Binder;
 //import com.google.inject.Module;
-//
 //import com.saicmotor.telematics.tsgp.tsip.httpserv.base.reader.RequestContentReader;
 //import com.saicmotor.telematics.tsgp.tsip.httpserv.base.reader.RequestContentReaderRegister;
 //import com.saicmotor.telematics.tsgp.tsip.httpserv.base.writer.IResponseWriter;
@@ -24,7 +23,6 @@
 ///**
 // * 处理Json请求的Guice模块
 // */
-//@SuppressWarnings("unchecked")
 //public class BaseModule extends AbstractBindingModule {
 //	private static final Logger LOGGER = LoggerFactory.getLogger(BaseModule.class);
 //
