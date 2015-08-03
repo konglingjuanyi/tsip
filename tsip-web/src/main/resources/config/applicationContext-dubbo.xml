@@ -88,4 +88,7 @@
 	<dubbo:reference id="setUserMobilePhoneService" interface="com.zxq.iov.cloud.sp.mds.api.ISetUserMobilePhoneService" version="1.1"/>
 	<dubbo:reference id="mPFastRegisterService" interface="com.zxq.iov.cloud.sp.mds.api.IMPFastRegisterService" version="1.1"/>
 	<dubbo:reference id="UpdatePasswordService" interface="com.zxq.iov.cloud.sp.mds.api.IUpdatePasswordService" version="1.1"/>
+
+	<dubbo:reference id="iTAvnLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnLoginVerifyService" version="1.1"/>
+	<dubbo:reference id="iTMPLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITMPLoginVerifyService" version="1.1"/>
 </beans>

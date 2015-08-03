@@ -7,20 +7,16 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.service;
 
 import com.saicmotor.telematics.framework.core.common.SpringContext;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.OTACallback;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.DubboHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.mds.MdsServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.roadbook.RoadbookServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.configure.Cfg;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.configure.MessageTemplate;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ErrorMessageHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ExceptionHandler;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ProtocolException;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.AdapterHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.LogHelper;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.MessageHelper;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

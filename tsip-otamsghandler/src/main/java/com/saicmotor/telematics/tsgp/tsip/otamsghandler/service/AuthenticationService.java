@@ -8,11 +8,10 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.service;
 
 import com.saicmotor.telematics.framework.core.common.SpringContext;
+import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTAEncoder;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.dispatcher.TCMP_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.ASLoginVerifyReq;
-import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.AVNLoginVerifyReq;
-import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.MPLoginVerifyReq;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.service.ITCMPAdapterService;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.service.TCMPAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.client.ClientFactory;
@@ -23,6 +22,11 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.TSIPException;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.AdapterHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.RequestUtil4TCMP;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.service.intercepter.InterceptorService;
+import com.zxq.iov.cloud.sec.tvowner.api.ITAvnLoginVerifyService;
+import com.zxq.iov.cloud.sec.tvowner.api.ITMPLoginVerifyService;
+import com.zxq.iov.cloud.sec.tvowner.api.dto.AvnLoginVerifyReq;
+import com.zxq.iov.cloud.sec.tvowner.api.dto.AvnLoginVerifyResp;
+import com.zxq.iov.cloud.sec.tvowner.api.dto.MPLoginVerifyResp;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -76,27 +80,41 @@ public class AuthenticationService {
 
     private int checkAVNAuthority(RequestContext context) throws IOException {
         TCMP_OTARequest request = RequestUtil4TCMP.createRequest(Cfg.AVN_VERIFY_AID, context);
-        AVNLoginVerifyReq avnLoginVerifyReq = new AVNLoginVerifyReq();
-        avnLoginVerifyReq.setAid(convertAid(context, (byte[]) AdapterHelper.getProperty(context.getRequestObject(), "applicationData"), context.getClientVersion()));
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        OTAEncoder encoder = new OTAEncoder(outputStream);
-        encoder.encode(avnLoginVerifyReq);
-        byte[] appBytes = outputStream.toByteArray();
-        request.setApplicationData(appBytes);
-        TCMP_OTARequest verify = invokeTCMP(request);
+        String aid = convertAid(context, (byte[]) AdapterHelper.getProperty(context.getRequestObject(), "applicationData"), context.getClientVersion());
+        ITAvnLoginVerifyService iTAvnLoginVerifyService = (ITAvnLoginVerifyService) SpringContext.getInstance().getBean("iTAvnLoginVerifyService");
+        AvnLoginVerifyReq req = new AvnLoginVerifyReq();
+        req.setAid(aid);
+        AvnLoginVerifyResp resp = null;
+        try {
+            resp = iTAvnLoginVerifyService.AvnLoginVerify(req);
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+        TCMP_OTARequest verify = enCode_TCMP_OTARequest(resp,request);
         return verify.getDispatcherBody().getResult();
     }
 
     private int checkMPAuthority(RequestContext context) throws IOException {
         TCMP_OTARequest request = RequestUtil4TCMP.createRequest(Cfg.MP_VERIFY_AID, context);
-        MPLoginVerifyReq mpLoginVerifyReq = new MPLoginVerifyReq();
-        mpLoginVerifyReq.setAid(convertAid(context, (byte[]) AdapterHelper.getProperty(context.getRequestObject(), "applicationData"), context.getClientVersion()));
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        OTAEncoder encoder = new OTAEncoder(outputStream);
-        encoder.encode(mpLoginVerifyReq);
-        byte[] appBytes = outputStream.toByteArray();
-        request.setApplicationData(appBytes);
-        TCMP_OTARequest verify = invokeTCMP(request);
+//        MPLoginVerifyReq mpLoginVerifyReq = new MPLoginVerifyReq();
+//        mpLoginVerifyReq.setAid(convertAid(context, (byte[]) AdapterHelper.getProperty(context.getRequestObject(), "applicationData"), context.getClientVersion()));
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        OTAEncoder encoder = new OTAEncoder(outputStream);
+//        encoder.encode(mpLoginVerifyReq);
+//        byte[] appBytes = outputStream.toByteArray();
+//        request.setApplicationData(appBytes);
+//        TCMP_OTARequest verify = invokeTCMP(request);
+        String aid = convertAid(context, (byte[]) AdapterHelper.getProperty(context.getRequestObject(), "applicationData"), context.getClientVersion());
+        ITMPLoginVerifyService iTMPLoginVerifyService = (ITMPLoginVerifyService) SpringContext.getInstance().getBean("iTMPLoginVerifyService");
+        com.zxq.iov.cloud.sec.tvowner.api.dto.MPLoginVerifyReq req = new com.zxq.iov.cloud.sec.tvowner.api.dto.MPLoginVerifyReq();
+        req.setAid(aid);
+        MPLoginVerifyResp resp = null;
+        try {
+            resp = iTMPLoginVerifyService.MPLoginVerify(req);
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+        TCMP_OTARequest verify = enCode_TCMP_OTARequest(resp,request);
         return verify.getDispatcherBody().getResult();
     }
 
@@ -107,7 +125,7 @@ public class AuthenticationService {
 //        String url = (String) SpringContext.getInstance().getConfig().getProperties().get("TCMP").get("url");
         String url = SpringContext.getInstance().getProperty("TCMP.url");
         IClient client = ClientFactory.getClient(ClientFactory.HTTP);
-        String returnSource = client.sendData(url,source);
+        String returnSource = client.sendData(url, source);
         return adapterService.receive(returnSource.getBytes());
     }
 
@@ -115,5 +133,24 @@ public class AuthenticationService {
 
         InterceptorService service = SpringContext.getInstance().getBean(InterceptorService.class);
         return service.convertAid(context.getAid(), version, appData);
+    }
+
+    /**
+     *
+      * @param o
+     * @param request
+     * @return
+     */
+    private TCMP_OTARequest enCode_TCMP_OTARequest(Object o,TCMP_OTARequest request){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        OTAEncoder encoder = new OTAEncoder(outputStream);
+        encoder.encode(o);
+        byte[] resultBytes = outputStream.toByteArray();
+        request.setApplicationData(resultBytes);
+        request.getDispatcherBody().setApplicationDataLength(Long.valueOf(resultBytes.length));
+        request.getDispatcherBody().setMessageID(2);
+        //return success status
+        request.getDispatcherBody().setResult(0);
+        return request;
     }
 }
