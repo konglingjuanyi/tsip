@@ -50,10 +50,10 @@ public class ApplicationServiceImpl implements IApplicationService {
                 LogHelper.info(LOGGER, context.getAid(), context.getMid(), context.getVin(), context.getUid(), source, from, context.getToken());
             }
 
-            MessageTemplate messageTemplate = MessageHelper.getMessage(context.getAid(), context.getMid());
-            if (messageTemplate == null) {
-                throw new ProtocolException("没有配置callback. AID:" + context.getAid() + ",MID:" + context.getMid());
-            }
+//            MessageTemplate messageTemplate = MessageHelper.getMessage(context.getAid(), context.getMid());
+//            if (messageTemplate == null) {
+//                throw new ProtocolException("没有配置callback. AID:" + context.getAid() + ",MID:" + context.getMid());
+//            }
 
             int authResultCode = 0;
             Integer testFlag = (Integer) (AdapterHelper.getProperty(context.getRequestObject(), "dispatcherBody.testFlag") == null ? 0 : AdapterHelper.getProperty(context.getRequestObject(), "dispatcherBody.testFlag"));
@@ -78,8 +78,8 @@ public class ApplicationServiceImpl implements IApplicationService {
             else {
                 //根据各种条件组合获取protocol，通过protocol获取callback
                 //传protocol入callback执行invoke
-                MessageTemplate.Protocol protocol = messageTemplate.findProtocol(context);
-                OTACallback callback = protocol.getCallback();
+//                MessageTemplate.Protocol protocol = messageTemplate.findProtocol(context);
+//                OTACallback callback = protocol.getCallback();
                 //调用服务时将token设置为新token
                 if((!"201".equals(context.getAid())) && (!Cfg.PLATFORM_TBOX.equals(RequestContext.getContext().getPlatform()))){
                     AdapterHelper.setProperty(context.getRequestObject(), "dispatcherBody.token", context.getToken());
@@ -96,9 +96,10 @@ public class ApplicationServiceImpl implements IApplicationService {
 
                 if(null != serviceHelper){
                     requestBack = serviceHelper.callDubboService(context);
-                }else {
-                    requestBack = callback.invoke(protocol, context.getRequestObject());
                 }
+//                else {
+//                    requestBack = callback.invoke(protocol, context.getRequestObject());
+//                }
 
             }
             if(!"113".equals(context.getAid())){
