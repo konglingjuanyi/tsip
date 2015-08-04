@@ -6,12 +6,18 @@ import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTADecoder;
 import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTAEncoder;
 import com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.dispatcher.AVN_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.dispatcher.MP_OTARequest;
+import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.myCar.*;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.MdsServiceEnum;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.zxq.iov.cloud.sp.mds.api.*;
 import com.zxq.iov.cloud.sp.mds.api.dto.*;
+import com.zxq.iov.cloud.sp.mds.api.dto.AddOrgVehicleReq;
+import com.zxq.iov.cloud.sp.mds.api.dto.AddPersonalVehicleMPAuthReq;
+import com.zxq.iov.cloud.sp.mds.api.dto.AddPersonalVehicleReq;
+import com.zxq.iov.cloud.sp.mds.api.dto.AddPersonalVehicleResp;
+import com.zxq.iov.cloud.sp.mds.api.dto.VehicleBrandModelResp;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -153,7 +159,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 }
                 mPUserInfoResp.setUserPhoto(resp.getUserPhoto());
 
-                request = enCode_MP_OTARequest(mPUserInfoResp,request);
+                request = enCode_MP_OTARequest(mPUserInfoResp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
             }
@@ -306,7 +312,12 @@ public class MdsServiceHelper implements ServiceHelper{
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
             }
-            //      添加个人车辆手机验证码验证（）
+            //添加个人车辆手机验证码验证
+//            if(MdsServiceEnum.ADDPERSONALVEHICLEMPAUTH.toString().equals(context.getAid())){
+//                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq req = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq.class);
+//                ISetUserMobilePhoneService setUserMobilePhoneService = (ISetUserMobilePhoneService) SpringContext.getInstance().getBean("ISetUserMobilePhoneService");
+//            }
+            //      用户主手机号码设置
             if(MdsServiceEnum.SETUSERMOBILEPHONE.toString().equals(context.getAid())){
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.SetUserMobilePhoneReq setUserMobilePhoneReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.SetUserMobilePhoneReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.SetUserMobilePhoneReq.class);
                 ISetUserMobilePhoneService setUserMobilePhoneService = (ISetUserMobilePhoneService) SpringContext.getInstance().getBean("ISetUserMobilePhoneService");

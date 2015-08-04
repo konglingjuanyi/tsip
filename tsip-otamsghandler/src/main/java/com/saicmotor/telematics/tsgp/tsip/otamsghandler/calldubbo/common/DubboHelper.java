@@ -19,6 +19,8 @@ public class DubboHelper {
 
     public static  List<String> aidRoadBookList = new ArrayList<String>();
 
+    public static  List<String> aidCommonList = new ArrayList<String>();
+
     /**
      * 存放各版本对应的AdapterService实例
      */
