@@ -6,9 +6,14 @@ import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTADecoder;
 import com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.dispatcher.AVN_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.*;
+import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.RoadBookCommentReq;
+import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.RoadBookDetailReq;
+import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.RoadBookQueryReq;
 import com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookBizService;
+import com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookCommentBizService;
+import com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookWeatherBizService;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.QueryValue;
-import com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.RoadBookSendToCarReq;
+import com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.*;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.resp.RoadBookDetailResp;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.resp.RoadBookQueryResp;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
@@ -92,11 +97,21 @@ public class RoadbookServiceHelper implements ServiceHelper {
 
         }
         if(RoadbookServiceEnum.COMMENTRECEIVE.getAid().equals(context.getAid())) {
+            IRoadBookCommentBizService roadBookCommentBizService = (IRoadBookCommentBizService) SpringContext.getInstance().getBean("roadBookCommentBizService");
             //解码传递过来的参数
             RoadBookCommentReq roadBookCommentReq = (RoadBookCommentReq) decoder.decode(RoadBookCommentReq.class);
+            com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.RoadBookCommentReq req = new com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.RoadBookCommentReq();
+            req.setStartNumber(roadBookCommentReq.getStartEndNumber().getStartNumber());
+            req.setEndNumber(roadBookCommentReq.getStartEndNumber().getEndNumber());
+            req.setRoadBookID(roadBookCommentReq.getRbID());
+            com.saicmotor.telematics.tsgp.sp.roadbook.dto.resp.RoadBookCommentResp resp = roadBookCommentBizService.queryRoadBookComment(req,reqBodyDto);
+            request = HelperUtils.enCode_AVN_OTARequest(resp,request);
+            //请求对象编码为字符串
+            requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
 
         }
         if(RoadbookServiceEnum.WEATHERINFOMATION.getAid().equals(context.getAid())) {
+            IRoadBookWeatherBizService roadBookWeatherBizService = (IRoadBookWeatherBizService) SpringContext.getInstance().getBean("roadBookWeatherBizService");
             //解码传递过来的参数
             RBWeatherInformationReq rbWeatherInformationReq = (RBWeatherInformationReq) decoder.decode(RBWeatherInformationReq.class);
         }

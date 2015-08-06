@@ -11,6 +11,7 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.DubboHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.mds.MdsServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.roadbook.RoadbookServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.vp.VpServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.configure.Cfg;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ErrorMessageHelper;
@@ -37,9 +38,9 @@ public class ApplicationServiceImpl implements IApplicationService {
         LOGGER.debug("enter ApplicationService.execute()...");
         long start = System.currentTimeMillis();
         String requestBack = null;
-//        RequestContext context = null;
+        RequestContext context = null;
         try {
-            RequestContext context = RequestContext.initContext(platform, source);
+            context = RequestContext.initContext(platform, source);
             if(!"113".equals(context.getAid())){
             //记录请求日志
                 //LogHelper.reportDataInfo(context.getAid(), context.getMid(), context.getVin(), source);
@@ -89,6 +90,9 @@ public class ApplicationServiceImpl implements IApplicationService {
                 if(DubboHelper.aidRoadBookList.contains(context.getAid())){
                      serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(RoadbookServiceHelper.class);
                 }
+                if(DubboHelper.vpList_v1.contains(context.getAid()) || DubboHelper.vpList_v2.contains(context.getAid()) ){
+                    serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(VpServiceHelper.class);
+                }
 
                 if(null != serviceHelper){
                     requestBack = serviceHelper.callDubboService(context);
@@ -103,7 +107,7 @@ public class ApplicationServiceImpl implements IApplicationService {
                 LogHelper.returnResultInfo(context.getAid(), context.getMid(), context.getVin(), context.getUid(), requestBack, "TSIP", "", "", from, context.getToken());
             }
         } catch (Exception e) {
-            requestBack = ExceptionHandler.processException(LOGGER,e);
+            requestBack = ExceptionHandler.processException(LOGGER,e,context.getAid());
         } finally {
             RequestContext.clear();
             LOGGER.debug("exit ApplicationService.execute(), spend time:" + (System.currentTimeMillis() - start));

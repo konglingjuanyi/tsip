@@ -16,9 +16,9 @@
         <listener-class>com.saicmotor.telematics.framework.core.listener.SpringContextInitializeListener</listener-class>
     </listener>
 
-    <!--<listener>-->
-        <!--<listener-class>com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ErrorInitStarter</listener-class>-->
-    <!--</listener>-->
+    <listener>
+        <listener-class>com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ErrorInitStarter</listener-class>
+    </listener>
     <listener>
         <listener-class>com.saicmotor.telematics.tsgp.tsip.otamsghandler.starter.OTAMappingInitStarter</listener-class>
     </listener>

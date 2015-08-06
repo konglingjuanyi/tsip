@@ -30,31 +30,31 @@ public class ExceptionHandler {
     private ExceptionHandler() {
     }
 
-//    /**
-//     * 处理异常
-//     */
-//    public static String processException(Logger logger, ApplicationException e) {
-//        try{
-//            LogHelper.error(logger, RequestContext.getContext()==null?new RequestContext():RequestContext.getContext(), e);
-//            e.getCode();
-//            //从ErrorMessageHelper获取异常信息
-//            Integer errorCode = Integer.valueOf(e.getCode());
-//            String errorMessage = ErrorMessageHelper.getErrorMessage(e.getCode());
-//            PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.result", errorCode);
-//            if(!Cfg.PLATFORM_TBOX.equals(RequestContext.getContext().getPlatform()) && StringUtils.isNotBlank(errorMessage)){
-//                PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.errorMessage", errorMessage.getBytes("utf-8"));
-//            }
-//            PropertyUtils.setProperty(RequestContext.getContext().getRequestObject(),"applicationData",new byte[0]);
-//            return new String(AdapterHelper.adapterGetBytesData(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), RequestContext.getContext().getRequestObject()));
-//        }catch (Exception ex){
-//            throw new TSIPException("处理异常结果出错。",ex);
-//        }
-//    }
+    /**
+     * 处理异常
+     */
+    public static String processException(Logger logger, ApplicationException e) {
+        try{
+            LogHelper.error(logger, RequestContext.getContext()==null?new RequestContext():RequestContext.getContext(), e);
+            e.getCode();
+            //从ErrorMessageHelper获取异常信息
+            Integer errorCode = Integer.valueOf(e.getCode());
+            String errorMessage = ErrorMessageHelper.getErrorMessage(e.getCode());
+            PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.result", errorCode);
+            if(!Cfg.PLATFORM_TBOX.equals(RequestContext.getContext().getPlatform()) && StringUtils.isNotBlank(errorMessage)){
+                PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.errorMessage", errorMessage.getBytes("utf-8"));
+            }
+            PropertyUtils.setProperty(RequestContext.getContext().getRequestObject(),"applicationData",new byte[0]);
+            return new String(AdapterHelper.adapterGetBytesData(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), RequestContext.getContext().getRequestObject()));
+        }catch (Exception ex){
+            throw new TSIPException("处理异常结果出错。",ex);
+        }
+    }
 
     /**
      * 处理异常
      */
-    public static String processException(Logger logger, Exception e) {
+    public static String processException(Logger logger, Exception e,String aid) {
         if(e.getClass().equals(ServLayerException.class)){
             ServLayerException sle = (ServLayerException)e;
             try{
@@ -62,9 +62,13 @@ public class ExceptionHandler {
                 //从ErrorMessageHelper获取异常信息
                 Integer errorCode = Integer.valueOf(sle.getCode());
                 String errorMessage = ErrorMessageHelper.getErrorMessage(sle.getCode());
-                PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.result", errorCode);
+                int outErrorCode = 0;
+                if(errorCode != null)
+                    outErrorCode = getOutErrorCode(String.valueOf(errorCode),aid);
+                PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.result",outErrorCode);
                 if(!Cfg.PLATFORM_TBOX.equals(RequestContext.getContext().getPlatform()) && StringUtils.isNotBlank(errorMessage)){
-                    PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.errorMessage", errorMessage.getBytes("utf-8"));
+                    String outErrorMessage = getOutErrorMes(outErrorCode);
+                    PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.errorMessage", outErrorMessage.getBytes("utf-8"));
                 }
                 PropertyUtils.setProperty(RequestContext.getContext().getRequestObject(),"applicationData",new byte[0]);
             }catch (Exception ex){
@@ -72,22 +76,28 @@ public class ExceptionHandler {
             }
         }
         return new String(AdapterHelper.adapterGetBytesData(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), RequestContext.getContext().getRequestObject()));
+    }
 
-//        try{
-//            LogHelper.error(logger, RequestContext.getContext()==null?new RequestContext():RequestContext.getContext(), e);
-//            e.getCode();
-//            //从ErrorMessageHelper获取异常信息
-//            Integer errorCode = Integer.valueOf(e.getCode());
-//            String errorMessage = ErrorMessageHelper.getErrorMessage(e.getCode());
-//            PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.result", errorCode);
-//            if(!Cfg.PLATFORM_TBOX.equals(RequestContext.getContext().getPlatform()) && StringUtils.isNotBlank(errorMessage)){
-//                PropertyUtils.setNestedProperty(RequestContext.getContext().getRequestObject(), "dispatcherBody.errorMessage", errorMessage.getBytes("utf-8"));
-//            }
-//            PropertyUtils.setProperty(RequestContext.getContext().getRequestObject(),"applicationData",new byte[0]);
-//            return new String(AdapterHelper.adapterGetBytesData(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), RequestContext.getContext().getRequestObject()));
-//        }catch (Exception ex){
-//            throw new TSIPException("处理异常结果出错。",ex);
-//        }
+    /**
+     *
+     * @param outErrorCode
+     * @return
+     */
+    private static String getOutErrorMes(int outErrorCode){
+        return ErrorMessageHelper.getErrorMessage(outErrorCode);
+    }
+
+    /**
+     *
+     * @param inErrorCode
+     * @param aid
+     * @return
+     */
+    private static int getOutErrorCode(String inErrorCode, String aid){
+        String outErrorCode = ErrorMessageHelper.getErrorMapping(inErrorCode,aid);
+        if(StringUtils.isNotEmpty(outErrorCode))
+            return Integer.parseInt(outErrorCode);
+        return 0;
     }
 }
 

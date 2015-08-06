@@ -19,6 +19,10 @@ public class DubboHelper {
 
     public static  List<String> aidRoadBookList = new ArrayList<String>();
 
+    public static  List<String> vpList_v1 = new ArrayList<String>();
+
+    public static  List<String> vpList_v2 = new ArrayList<String>();
+
     public static  List<String> aidCommonList = new ArrayList<String>();
 
     /**
@@ -53,6 +57,7 @@ public class DubboHelper {
         aidMdsList.add("5F4");
         aidMdsList.add("504");
         aidMdsList.add("505");
+        aidMdsList.add("591");
 
         aidRoadBookList.add("481");
         aidRoadBookList.add("482");
@@ -64,6 +69,53 @@ public class DubboHelper {
         aidRoadBookList.add("488");
         aidRoadBookList.add("489");
         aidRoadBookList.add("2F4");
+
+        vpList_v1.add("205");
+        vpList_v1.add("206");
+        vpList_v1.add("211");
+        vpList_v1.add("212");
+        vpList_v1.add("213");
+        vpList_v1.add("214");
+        vpList_v1.add("215");
+        vpList_v1.add("222");
+        vpList_v1.add("223");
+        vpList_v1.add("240");
+        vpList_v1.add("241");
+        vpList_v1.add("250");
+        vpList_v1.add("251");
+        vpList_v2.add("2K1");
+        vpList_v2.add("2K2");
+        vpList_v1.add("510");
+        vpList_v1.add("511");
+        vpList_v1.add("521");
+        vpList_v1.add("522");
+        vpList_v1.add("523");
+        vpList_v1.add("561");
+        vpList_v1.add("562");
+        vpList_v1.add("563");
+        vpList_v1.add("564");
+        vpList_v1.add("571");
+        vpList_v1.add("591");
+        vpList_v1.add("5B1");
+        vpList_v1.add("5B2");
+        vpList_v1.add("5B3");
+        vpList_v1.add("5B4");
+        vpList_v2.add("5B5");
+        vpList_v2.add("5B6");
+        vpList_v2.add("5B7");
+        vpList_v2.add("5B8");
+        vpList_v2.add("5B9");
+        vpList_v2.add("5BA");
+        vpList_v2.add("5BB");
+        vpList_v2.add("5BC");
+        vpList_v1.add("5C1");
+        vpList_v1.add("5D1");
+        vpList_v1.add("5D2");
+        vpList_v1.add("5D3");
+        vpList_v1.add("5D4");
+        vpList_v1.add("5E1");
+        vpList_v1.add("5E2");
+        vpList_v1.add("782");
     }
 
     public static void main(String[] args) {

@@ -4,6 +4,8 @@ import com.saicmotor.telematics.framework.core.common.SpringContext;
 import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTADecoder;
 import com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.dispatcher.AVN_OTARequest;
+import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.*;
+import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.ProvinceInfo;
 import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.dispatcher.MP_OTARequest;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
@@ -11,10 +13,19 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.MdsServ
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.*;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.*;
+import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityCode;
+import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityInfo;
+import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq;
+import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadResp;
+import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CitySettingReq;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -52,17 +63,20 @@ public class MdsServiceHelper implements ServiceHelper{
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
             }
-            //城市列表下载
-            if(MdsServiceEnum.CITYLISTDOWNLOAD.toString().equals(context.getAid())){
-                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq cityListDownloadReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.city.CityListDownloadReq.class);
+            //AVN城市列表下载
+            if(MdsServiceEnum.AVN_CITYLISTDOWNLOAD.toString().equals(context.getAid())){
+                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq cityListDownloadReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq.class);
                 IAvnCityApi getCityListService = (IAvnCityApi) SpringContext.getInstance().getBean("avnCityApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq();
                 req.setUid(request.getDispatcherBody().getUid());
-                req.setCityType(cityListDownloadReq.getCityType().getIntegerForm());
+                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityType cityType = cityListDownloadReq.getCityType();
+                if(cityType.getValue().name().equals("all"))
+                    req.setCityType(1);
+                else
+                    req.setCityType(0);
                 CityListDownloadResp resp = getCityListService.getCityList(req);
                 com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp();
-                Collection cl = resp.getCityList();
-                cityListDownloadResp.setCityList(cl);
+                cityListDownloadResp = coverAvnObject(resp);
                 request = HelperUtils.enCode_AVN_OTARequest(cityListDownloadResp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);
@@ -121,6 +135,25 @@ public class MdsServiceHelper implements ServiceHelper{
             ByteArrayInputStream inputStream = new ByteArrayInputStream(appBytes);
             OTADecoder decoder = new OTADecoder(inputStream);
 
+            //手机城市列表下载
+            if(MdsServiceEnum.MP_CITYLISTDOWNLOAD.toString().equals(context.getAid())){
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadReq cityListDownloadReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadReq.class);
+                IAvnCityApi getCityListService = (IAvnCityApi) SpringContext.getInstance().getBean("avnCityApi");
+                com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq();
+                req.setUid(request.getDispatcherBody().getUid());
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityType cityType = cityListDownloadReq.getCityType();
+                if(cityType.getValue().name().equals("all"))
+                    req.setCityType(1);
+                else
+                    req.setCityType(0);
+                CityListDownloadResp resp = getCityListService.getCityList(req);
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp();
+                cityListDownloadResp = coverMpObject(resp);
+                request = HelperUtils.enCode_MP_OTARequest(cityListDownloadResp, request);
+                //请求对象编码为字符串
+                requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),resp);
+            }
+
             //MP获取AVN激活码
             if(MdsServiceEnum.MP_GETAVNACTIVATIONCODE.toString().equals(context.getAid())){
                 IAvnActivateApi getAvnActivationCodeService = (IAvnActivateApi) SpringContext.getInstance().getBean("avnActivateApi");
@@ -143,9 +176,12 @@ public class MdsServiceHelper implements ServiceHelper{
                 mPUserInfoResp.setEmergencyMobile(resp.getEmergencyMobile());
                 mPUserInfoResp.setMobilePhone(resp.getMobilePhone());
                 try {
-                    mPUserInfoResp.setNickName(resp.getNickName().getBytes("UTF-8"));
-                    mPUserInfoResp.setEmergencyName(resp.getEmergencyName().getBytes("UTF-8"));
-                    mPUserInfoResp.setAddress(resp.getAddress().getBytes("UTF-8"));
+                    if(StringUtils.isNotEmpty(resp.getNickName()))
+                        mPUserInfoResp.setNickName(resp.getNickName().getBytes("UTF-8"));
+                    if(StringUtils.isNotEmpty(resp.getEmergencyName()))
+                        mPUserInfoResp.setEmergencyName(resp.getEmergencyName().getBytes("UTF-8"));
+                    if(StringUtils.isNotEmpty(resp.getAddress()))
+                        mPUserInfoResp.setAddress(resp.getAddress().getBytes("UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -175,9 +211,13 @@ public class MdsServiceHelper implements ServiceHelper{
                 MPVehicleInfoResp resp= mPVehicleInfoQueryService.queryMPVehicleInfo(req);
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPVehicleInfoResp mpVehicleInfoResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPVehicleInfoResp();
                 try {
+                    if(StringUtils.isNotEmpty(resp.getBrand()))
                     mpVehicleInfoResp.setBrand(resp.getBrand().getBytes("UTF-8"));
+                    if(StringUtils.isNotEmpty(resp.getLicenceNumber()))
                     mpVehicleInfoResp.setLicenceNumber(resp.getLicenceNumber().getBytes("UTF-8"));
+                    if(StringUtils.isNotEmpty(resp.getModelName()))
                     mpVehicleInfoResp.setModelName(resp.getModelName().getBytes("UTF-8"));
+                    if(StringUtils.isNotEmpty(resp.getVehicleName()))
                     mpVehicleInfoResp.setVehicleName(resp.getVehicleName().getBytes("UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -356,5 +396,82 @@ public class MdsServiceHelper implements ServiceHelper{
         return requestBack;
     }
 
+    /**
+     *
+     * @param resp
+     * @return
+     */
+    private com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp coverMpObject(CityListDownloadResp resp){
+        List<com.zxq.iov.cloud.sp.mds.tcmp.api.dto.ProvinceInfo> cityList = resp.getCityList();
+        List<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.ProvinceInfo> list_pro = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.ProvinceInfo>();
+        for(com.zxq.iov.cloud.sp.mds.tcmp.api.dto.ProvinceInfo p : cityList){
+            List<CityInfo>  cityInfos = p.getCityInfoList();
+            List<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityInfo> list_city = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityInfo>();
+            for(CityInfo c : cityInfos){
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityInfo cityInfo = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityInfo();
+                cityInfo.setShortName(c.getShortName());
+                cityInfo.setRegionId(c.getRegionId());
+                try {
+                    if(StringUtils.isNotEmpty(c.getRealName()))
+                        cityInfo.setRealName(c.getRealName().getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                list_city.add(cityInfo);
+            }
+            com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.ProvinceInfo provinceInfo = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.ProvinceInfo();
+            try {
+                provinceInfo.setRealName(p.getRealName().getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            provinceInfo.setShortName(p.getShortName());
+            provinceInfo.setRegionId(p.getRegionId());
+            provinceInfo.setCityInfoList(list_city);
+            list_pro.add(provinceInfo);
+        }
+        com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp();
+        cityListDownloadResp.setCityList(list_pro);
+        return cityListDownloadResp;
+    }
+
+    /**
+     *
+     * @param resp
+     * @return
+     */
+    private com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp coverAvnObject(CityListDownloadResp resp){
+        List<com.zxq.iov.cloud.sp.mds.tcmp.api.dto.ProvinceInfo> cityList = resp.getCityList();
+        List<com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.ProvinceInfo> list_pro = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.ProvinceInfo>();
+        for(com.zxq.iov.cloud.sp.mds.tcmp.api.dto.ProvinceInfo p : cityList){
+            List<CityInfo>  cityInfos = p.getCityInfoList();
+            List<com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityInfo> list_city = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityInfo>();
+            for(CityInfo c : cityInfos){
+                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityInfo cityInfo = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityInfo();
+                cityInfo.setShortName(c.getShortName());
+                cityInfo.setRegionId(c.getRegionId());
+                try {
+                    if(StringUtils.isNotEmpty(c.getRealName()))
+                        cityInfo.setRealName(c.getRealName().getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                list_city.add(cityInfo);
+            }
+            com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.ProvinceInfo provinceInfo = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.ProvinceInfo();
+            try {
+                provinceInfo.setRealName(p.getRealName().getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            provinceInfo.setShortName(p.getShortName());
+            provinceInfo.setRegionId(p.getRegionId());
+            provinceInfo.setCityInfoList(list_city);
+            list_pro.add(provinceInfo);
+        }
+        com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp();
+        cityListDownloadResp.setCityList(list_pro);
+        return cityListDownloadResp;
+    }
 
 }

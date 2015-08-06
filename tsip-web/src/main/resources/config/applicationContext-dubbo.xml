@@ -55,4 +55,14 @@
 
 	<dubbo:reference id="iTAvnLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnLoginVerifyService" version="1.1"/>
 	<dubbo:reference id="iTMPLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITMPLoginVerifyService" version="1.1"/>
+
+	<dubbo:reference id="roadBookBizService" interface="com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookBizService"  version="1.1"/>
+	<dubbo:reference id="roadBookCommentBizService" interface="com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookCommentBizService"  version="1.1"/>
+	<dubbo:reference id="roadBookWeatherBizService" interface="com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookWeatherBizService"  version="1.1"/>
+
+	<dubbo:reference id="vpAppServiceV1" check="false"
+					 interface="com.saicmotor.telematics.tsgp.sp.vp.api.IApplicationService" version="1.1" />
+
+	<dubbo:reference id="vpAppServiceV2" check="false"
+					 interface="com.saicmotor.telematics.tsgp.sp.vp.api.IApplicationService" version="1.2" />
 </beans>
