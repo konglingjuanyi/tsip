@@ -34,8 +34,20 @@
     </dependency>
 
     <dependency>
+      <groupId>com.saicmotor.telematics.tsgp.as</groupId>
+      <artifactId>as-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.saicmotor.telematics.tsgp.sp</groupId>
       <artifactId>sp-message-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.saicmotor.telematics.tsgp.sp</groupId>
+      <artifactId>sp-weather-api</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -48,6 +60,12 @@
     <dependency>
       <groupId>com.saicmotor.telematics.tsgp.sp</groupId>
       <artifactId>sp-vehicleProtection-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.saicmotor.telematics.tsgp.sp</groupId>
+      <artifactId>sp-vehicleNavi-api</artifactId>
       <version>${project.version}</version>
     </dependency>
 

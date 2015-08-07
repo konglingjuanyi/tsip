@@ -1,5 +1,15 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common;
 
+import com.saicmotor.telematics.framework.core.common.SpringContext;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.as.AsServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.auth.AuthServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.mds.MdsServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.message.MessageServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.navi.NaviServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.roadbook.RoadbookServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.vp.VpServiceHelper;
+import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.weather.WeatherServiceHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,15 +25,23 @@ public class DubboHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.DubboHelper.class);
 
-    public static List<String> aidMdsList = new ArrayList<String>();
+    private static List<String> mdsList = new ArrayList<String>();
 
-    public static  List<String> aidRoadBookList = new ArrayList<String>();
+    private static  List<String> roadBookList = new ArrayList<String>();
 
-    public static  List<String> vpList_v1 = new ArrayList<String>();
+    private static  List<String> vpList_v1 = new ArrayList<String>();
 
-    public static  List<String> vpList_v2 = new ArrayList<String>();
+    private static  List<String> vpList_v2 = new ArrayList<String>();
 
-    public static  List<String> aidCommonList = new ArrayList<String>();
+    private static  List<String> authList = new ArrayList<String>();
+
+    private static  List<String> asList = new ArrayList<String>();
+
+    private static List<String> messageList = new ArrayList<String>();
+
+    private static List<String> naviList = new ArrayList<String>();
+
+    private static List<String> weatherList = new ArrayList<String>();
 
     /**
      * 存放各版本对应的AdapterService实例
@@ -31,44 +49,44 @@ public class DubboHelper {
     private static Map<String, Object> dubboMap = new HashMap<String, Object>();
 
     static {
-        aidMdsList.add("202");
-        aidMdsList.add("4A3");
-        aidMdsList.add("5F7");
-        aidMdsList.add("4A4");
-        aidMdsList.add("766");
-        aidMdsList.add("262");
-        aidMdsList.add("2F3");
-        aidMdsList.add("506");
-        aidMdsList.add("507");
-        aidMdsList.add("508");
-        aidMdsList.add("509");
-        aidMdsList.add("50A");
-        aidMdsList.add("50B");
-        aidMdsList.add("A05");
-        aidMdsList.add("A07");
-        aidMdsList.add("A09");
-        aidMdsList.add("A0C");
-        aidMdsList.add("4A8");
-        aidMdsList.add("7A7");
-        aidMdsList.add("5F1");
-        aidMdsList.add("5F6");
-        aidMdsList.add("5F2");
-        aidMdsList.add("5F3");
-        aidMdsList.add("5F4");
-        aidMdsList.add("504");
-        aidMdsList.add("505");
-        aidMdsList.add("591");
+        mdsList.add("202");
+        mdsList.add("4A3");
+        mdsList.add("5F7");
+        mdsList.add("4A4");
+        mdsList.add("766");
+        mdsList.add("262");
+        mdsList.add("2F3");
+        mdsList.add("506");
+        mdsList.add("507");
+        mdsList.add("508");
+        mdsList.add("509");
+        mdsList.add("50A");
+        mdsList.add("50B");
+        mdsList.add("A05");
+        mdsList.add("A07");
+        mdsList.add("A09");
+        mdsList.add("A0C");
+        mdsList.add("4A8");
+        mdsList.add("7A7");
+        mdsList.add("5F1");
+        mdsList.add("5F6");
+        mdsList.add("5F2");
+        mdsList.add("5F3");
+        mdsList.add("5F4");
+        mdsList.add("504");
+        mdsList.add("505");
+        mdsList.add("591");
 
-        aidRoadBookList.add("481");
-        aidRoadBookList.add("482");
-        aidRoadBookList.add("483");
-        aidRoadBookList.add("484");
-        aidRoadBookList.add("485");
-        aidRoadBookList.add("486");
-        aidRoadBookList.add("487");
-        aidRoadBookList.add("488");
-        aidRoadBookList.add("489");
-        aidRoadBookList.add("2F4");
+        roadBookList.add("481");
+        roadBookList.add("482");
+        roadBookList.add("483");
+        roadBookList.add("484");
+        roadBookList.add("485");
+        roadBookList.add("486");
+        roadBookList.add("487");
+        roadBookList.add("488");
+        roadBookList.add("489");
+        roadBookList.add("2F4");
 
         vpList_v1.add("205");
         vpList_v1.add("206");
@@ -116,9 +134,141 @@ public class DubboHelper {
         vpList_v1.add("5E1");
         vpList_v1.add("5E2");
         vpList_v1.add("782");
+
+        authList.add("201");
+        authList.add("203");
+        authList.add("501");
+        authList.add("502");
+        authList.add("503");
+
+    }
+
+    /**
+     * 是否是导航
+     * @param aid
+     * @return
+     */
+    private static boolean isNavi(String aid){
+        return naviList.contains(aid) ? true : false;
+    }
+
+    /**
+     * 是否是消息
+     * @param aid
+     * @return
+     */
+    private static boolean isMessage(String aid){
+        return messageList.contains(aid) ? true :false;
+    }
+
+    /**
+     * 是否是mds
+     * @param aid
+     * @return
+     */
+    private static boolean isMds(String aid){
+        return mdsList.contains(aid) ? true : false;
+    }
+
+    /**
+     * 是否是roadbook
+     * @param aid
+     * @return
+     */
+    private static boolean isRoadBook(String aid){
+        return roadBookList.contains(aid) ? true : false;
+    }
+
+
+    /**
+     * 是否是鉴权
+     * @param aid
+     * @return
+     */
+    private static boolean isAuth(String aid){
+        return authList.contains(aid) ? true : false;
+    }
+
+    /**
+     * 是否是VP1
+     * @param aid
+     * @return
+     */
+    public static boolean isVp1(String aid){
+        return vpList_v1.contains(aid) ? true : false;
+    }
+
+    /**
+     * 是否是VP2
+     * @param aid
+     * @return
+     */
+    public static boolean isVp2(String aid){
+        return vpList_v2.contains(aid) ? true : false;
+    }
+
+    /**
+     * 是否是VP
+     * @param aid
+     * @return
+     */
+    private static boolean isVp(String aid){
+        return isVp1(aid) || isVp2(aid) ? true : false;
+    }
+
+    /**
+     * 是否是AS
+     * @param aid
+     * @return
+     */
+    private static boolean isAs(String aid){
+        return aid.startsWith("A");
+    }
+
+    /**
+     * 是否是天气
+     * @param aid
+     * @return
+     */
+    private static boolean isWeather(String aid){
+        return weatherList.contains(aid) ? true :false;
+    }
+
+    /**
+     * 初始化dubboService
+     * @param aid
+     * @return
+     */
+    public static ServiceHelper initDubboService(String aid){
+        ServiceHelper serviceHelper = null;
+        if(DubboHelper.isMds(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(MdsServiceHelper.class);
+        }
+        if(DubboHelper.isRoadBook(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(RoadbookServiceHelper.class);
+        }
+        if(DubboHelper.isVp(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(VpServiceHelper.class);
+        }
+        if(DubboHelper.isAuth(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(AuthServiceHelper.class);
+        }
+        if(DubboHelper.isAs(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(AsServiceHelper.class);
+        }
+        if(DubboHelper.isNavi(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(NaviServiceHelper.class);
+        }
+        if(DubboHelper.isMessage(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(MessageServiceHelper.class);
+        }
+        if(DubboHelper.isWeather(aid)){
+            serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(WeatherServiceHelper.class);
+        }
+        return serviceHelper;
     }
 
     public static void main(String[] args) {
-        System.out.println(aidMdsList.contains("202"));
+        System.out.println(mdsList.contains("202"));
     }
 }

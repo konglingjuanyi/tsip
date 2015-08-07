@@ -56,6 +56,12 @@
 	<dubbo:reference id="iTAvnLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnLoginVerifyService" version="1.1"/>
 	<dubbo:reference id="iTMPLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITMPLoginVerifyService" version="1.1"/>
 
+	<dubbo:reference id="avnUserLoginAuthService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnUserLoginAuthService" version="1.1"/>
+	<dubbo:reference id="avnEquipLoginAuthService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnEquipLoginAuthService" version="1.1"/>
+	<dubbo:reference id="mobileLoginAuthService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITMobileLoginAuthService" version="1.1"/>
+	<dubbo:reference id="getMobileDynamicPasswordApi" check="false" interface="com.zxq.iov.cloud.sp.mds.tcmp.api.IGetMobileDynamicPasswordApi" version="1.1"/>
+	<dubbo:reference id="mobileVerificationAuthApi" check="false" interface="com.zxq.iov.cloud.sp.mds.tcmp.api.IMobileVerificationAuthApi" version="1.1"/>
+
 	<dubbo:reference id="roadBookBizService" interface="com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookBizService"  version="1.1"/>
 	<dubbo:reference id="roadBookCommentBizService" interface="com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookCommentBizService"  version="1.1"/>
 	<dubbo:reference id="roadBookWeatherBizService" interface="com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookWeatherBizService"  version="1.1"/>
@@ -65,4 +71,12 @@
 
 	<dubbo:reference id="vpAppServiceV2" check="false"
 					 interface="com.saicmotor.telematics.tsgp.sp.vp.api.IApplicationService" version="1.2" />
+
+	<dubbo:reference id="asService" interface="com.saicmotor.telematics.tsgp.as.api.IApplicationService" version="1.1" />
+
+	<dubbo:reference id="naviService" interface="com.saicmotor.telematics.tsgp.sp.navi.api.IApplicationService" version="1.1" />
+
+	<dubbo:reference id="messageService" interface="com.saicmotor.telematics.tsgp.sp.message.api.IApplicationService" version="1.1" />
+
+	<dubbo:reference id="weatherService" interface="com.saicmotor.telematics.tsgp.sp.weather.api.IApplicationService" version="1.1" />
 </beans>

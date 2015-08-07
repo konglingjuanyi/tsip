@@ -6,10 +6,12 @@ import com.saicmotor.telematics.tsgp.sp.vp.api.IApplicationService;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.DubboHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Administrator on 2015/7/28.
  */
+@Service
 public class VpServiceHelper implements ServiceHelper {
     @Override
     public String callDubboService(RequestContext context) throws ApiException {
@@ -17,11 +19,11 @@ public class VpServiceHelper implements ServiceHelper {
         String plf = context.getPlatform();
         String source = context.getSource();
         String requestBack = null;
-        if(DubboHelper.vpList_v1.contains(aid)){
+        if(DubboHelper.isVp1(aid)){
             IApplicationService service = (IApplicationService) SpringContext.getInstance().getBean("vpAppServiceV1");
             requestBack = service.execute(plf,source);
         }
-        if(DubboHelper.vpList_v2.contains(aid)){
+        if(DubboHelper.isVp2(aid)){
             IApplicationService service = (IApplicationService) SpringContext.getInstance().getBean("vpAppServiceV2");
             requestBack = service.execute(plf,source);
         }

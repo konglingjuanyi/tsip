@@ -9,9 +9,6 @@ package com.saicmotor.telematics.tsgp.tsip.otamsghandler.service;
 import com.saicmotor.telematics.framework.core.common.SpringContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.DubboHelper;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.mds.MdsServiceHelper;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.roadbook.RoadbookServiceHelper;
-import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.vp.VpServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.configure.Cfg;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception.ErrorMessageHelper;
@@ -41,6 +38,7 @@ public class ApplicationServiceImpl implements IApplicationService {
         RequestContext context = null;
         try {
             context = RequestContext.initContext(platform, source);
+            String aid = context.getAid();
             if(!"113".equals(context.getAid())){
             //记录请求日志
                 //LogHelper.reportDataInfo(context.getAid(), context.getMid(), context.getVin(), source);
@@ -81,26 +79,11 @@ public class ApplicationServiceImpl implements IApplicationService {
                 if((!"201".equals(context.getAid())) && (!Cfg.PLATFORM_TBOX.equals(RequestContext.getContext().getPlatform()))){
                     AdapterHelper.setProperty(context.getRequestObject(), "dispatcherBody.token", context.getToken());
                 }
-                ServiceHelper serviceHelper = null;
-                //CALL MDS DUBBO SERVICE
                 //init serviceHelper
-                if(DubboHelper.aidMdsList.contains(context.getAid())){
-                     serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(MdsServiceHelper.class);
-                }
-                if(DubboHelper.aidRoadBookList.contains(context.getAid())){
-                     serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(RoadbookServiceHelper.class);
-                }
-                if(DubboHelper.vpList_v1.contains(context.getAid()) || DubboHelper.vpList_v2.contains(context.getAid()) ){
-                    serviceHelper = (ServiceHelper) SpringContext.getInstance().getBean(VpServiceHelper.class);
-                }
-
+                ServiceHelper serviceHelper = DubboHelper.initDubboService(aid);
                 if(null != serviceHelper){
                     requestBack = serviceHelper.callDubboService(context);
                 }
-//                else {
-//                    requestBack = callback.invoke(protocol, context.getRequestObject());
-//                }
-
             }
             if(!"113".equals(context.getAid())){
                 //记录返回的日志

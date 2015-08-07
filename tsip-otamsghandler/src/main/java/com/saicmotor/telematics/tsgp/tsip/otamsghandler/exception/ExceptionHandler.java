@@ -8,7 +8,6 @@
 package com.saicmotor.telematics.tsgp.tsip.otamsghandler.exception;
 
 
-import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.framework.core.exception.ServLayerException;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.configure.Cfg;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;

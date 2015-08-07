@@ -4,29 +4,22 @@ import com.saicmotor.telematics.framework.core.common.SpringContext;
 import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTADecoder;
 import com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.dispatcher.AVN_OTARequest;
-import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.*;
-import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.ProvinceInfo;
 import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.dispatcher.MP_OTARequest;
+import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.OperationType;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.MdsServiceEnum;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.*;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.*;
-import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityCode;
-import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityInfo;
-import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq;
-import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadResp;
-import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CitySettingReq;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -83,12 +76,24 @@ public class MdsServiceHelper implements ServiceHelper{
             }
             //关注城市添加、删除
             if(MdsServiceEnum.ADDORREMOVECONCERNCITIES.toString().equals(context.getAid())){
-                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CitySettingReq citySettingReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CitySettingReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.city.CitySettingReq.class);
+                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CitySettingReq citySettingReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CitySettingReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CitySettingReq.class);
                 IAvnCityApi addOrRemoveConcernCitiesService = (IAvnCityApi) SpringContext.getInstance().getBean("avnCityApi");
                 CitySettingReq req = new CitySettingReq();
-                Collection cl = citySettingReq.getCityCodes();
-                req.setCityCodes((List<CityCode>) cl);
-                req.setOperation(citySettingReq.getOperation().getIntegerForm());
+                Collection<com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.weather.CityCode> cl = citySettingReq.getCityCodes();
+                List<CityCode> cityCodes = new ArrayList<CityCode>();
+                Iterator it = cl.iterator();
+                while (it.hasNext()){
+                    com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.weather.CityCode cityCode = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.weather.CityCode) it.next();
+                    CityCode code = new CityCode();
+                    code.setRegionId(cityCode.getCityCode());
+                    cityCodes.add(code);
+                }
+                req.setCityCodes(cityCodes);
+                if(citySettingReq.getOperation().getValue().name().equals("add"))
+                    req.setOperation(1);
+                else
+                    req.setOperation(2);
+
                 req.setUid(request.getDispatcherBody().getUid());
                 CitySettingResp resp = addOrRemoveConcernCitiesService.addOrRemoveConcernCities(req);
                 request = HelperUtils.enCode_AVN_OTARequest(resp, request);
@@ -151,7 +156,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 cityListDownloadResp = coverMpObject(resp);
                 request = HelperUtils.enCode_MP_OTARequest(cityListDownloadResp, request);
                 //请求对象编码为字符串
-                requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),resp);
+                requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);
             }
 
             //MP获取AVN激活码
@@ -290,9 +295,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 IMPVehicleApi getVehicleBrandModelService = (IMPVehicleApi) SpringContext.getInstance().getBean("mPVehicleApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.VehicleBrandModelReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.VehicleBrandModelReq();
                 VehicleBrandModelResp vehicleBrandModelResp = getVehicleBrandModelService.getVehicleBrandModel(req);
-                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrandModelResp resp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrandModelResp();
-                Collection cl = vehicleBrandModelResp.getBrandList();
-                resp.setBrandList(cl);
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrandModelResp resp = coverMpVehicleBrandModeResp(vehicleBrandModelResp);
                 request = HelperUtils.enCode_MP_OTARequest(resp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
@@ -313,7 +316,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 addPersonalVehicleResp.setAddFlag(resp.isAddFlag());
                 addPersonalVehicleResp.setSimInfo(resp.getSimInfo());
                 addPersonalVehicleResp.setIsFirstAdd(resp.isFirstAdd());
-                Collection cl = resp.getVinList();
+                Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo> cl = coverVinInfo(resp.getVinList());
                 addPersonalVehicleResp.setVinList(cl);
                 request = HelperUtils.enCode_MP_OTARequest(addPersonalVehicleResp, request);
                 //请求对象编码为字符串
@@ -338,7 +341,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 req.setUserId(request.getDispatcherBody().getUid());
                 AddOrgVehicleResp resp = addOrgVehicleService.addOrgVehicle(req);
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddOrgVehicleResp addOrgVehicleResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddOrgVehicleResp();
-                Collection cl = resp.getVinList();
+                Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo> cl = coverVinInfo(resp.getVinList());
                 addOrgVehicleResp.setVinList(cl);
                 request = HelperUtils.enCode_MP_OTARequest(addOrgVehicleResp, request);
                 //请求对象编码为字符串
@@ -474,4 +477,71 @@ public class MdsServiceHelper implements ServiceHelper{
         return cityListDownloadResp;
     }
 
+    /**
+     *
+     * @param vehicleBrandModelResp
+     * @return
+     */
+    private com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrandModelResp coverMpVehicleBrandModeResp( VehicleBrandModelResp vehicleBrandModelResp){
+        com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrandModelResp resp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrandModelResp();
+        Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrand> vbc = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrand>();
+        List<VehicleBrand> vehicleBrands = vehicleBrandModelResp.getBrandList();
+        for(VehicleBrand vb : vehicleBrands){
+            com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrand vehicleBrand = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleBrand();
+            List<VehicleModel> modelList = vb.getModelList();
+            Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleModel> vmc = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleModel>();
+            for(VehicleModel vm : modelList){
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleModel vcm = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VehicleModel();
+                List<ModelYear> modelYearList = vm.getModelYearList();
+                Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.ModelYear> myc = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.ModelYear>();
+                for(ModelYear my : modelYearList){
+                    com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.ModelYear mdy = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.ModelYear();
+                    mdy.setModelId(my.getModelId());
+                    mdy.setModelYear(my.getModelYear());
+                    myc.add(mdy);
+                }
+                try {
+                    vcm.setModelName(vm.getModelName().getBytes("UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                vcm.setModelYearList(myc);
+                vmc.add(vcm);
+            }
+            vehicleBrand.setModelList(vmc);
+            try {
+                vehicleBrand.setBrandName(vb.getBrandName().getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            vehicleBrand.setBrandId(vb.getBrandId());
+            vbc.add(vehicleBrand);
+        }
+        resp.setBrandList(vbc);
+        return resp;
+    }
+
+    /**
+     *
+     * @param vins
+     * @return
+     */
+    private Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo> coverVinInfo(List<Vin> vins){
+        Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo> vinInfos = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo>();
+        for(Vin v : vins){
+            com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo vinInfo = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo();
+            try {
+                vinInfo.setBrandName(v.getBrandName().getBytes("UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            vinInfo.setIsAcivate(v.isAcivate());
+            vinInfo.setModelName(vinInfo.getModelName());
+            vinInfo.setName(vinInfo.getName());
+            vinInfo.setSeries(vinInfo.getSeries());
+            vinInfo.setVehiclePhoto(vinInfo.getVehiclePhoto());
+            vinInfos.add(vinInfo);
+        }
+        return vinInfos;
+    }
 }
