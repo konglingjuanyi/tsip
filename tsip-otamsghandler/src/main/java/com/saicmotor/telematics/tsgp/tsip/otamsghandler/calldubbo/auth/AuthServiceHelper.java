@@ -11,9 +11,7 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.AuthServiceEnum;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
-import com.zxq.iov.cloud.sec.tvowner.api.ITAvnEquipLoginAuthService;
-import com.zxq.iov.cloud.sec.tvowner.api.ITAvnUserLoginAuthService;
-import com.zxq.iov.cloud.sec.tvowner.api.ITMobileLoginAuthService;
+import com.zxq.iov.cloud.sec.tvowner.api.*;
 import com.zxq.iov.cloud.sec.tvowner.api.dto.*;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.IGetMobileDynamicPasswordApi;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.IMobileVerificationAuthApi;
@@ -51,13 +49,13 @@ public class AuthServiceHelper implements ServiceHelper {
             OTADecoder decoder = new OTADecoder(inputStream);
 
             com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInReq avnUserLoggingInReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInReq.class);
-            ITAvnUserLoginAuthService avnUserLoginAuthService = (ITAvnUserLoginAuthService) SpringContext.getInstance().getBean("avnUserLoginAuthService");
+            com.zxq.iov.cloud.sec.tvowner.api.ITAvnAuthApi avnAuthApi = (ITAvnAuthApi) SpringContext.getInstance().getBean("avnAuthApi");
             AvnUserLoggingInReq req = new AvnUserLoggingInReq();
             req.setPassword(avnUserLoggingInReq.getPassword());
             req.setToken(token);
             req.setUid(uid);
             req.setVin(vin);
-            AvnUserLoggingInResp resp = avnUserLoginAuthService.AvnUserLoginAuth(req);
+            AvnUserLoggingInResp resp = avnAuthApi.AvnUserLoginAuth(req);
             com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInResp avnUserLoggingInResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInResp();
             avnUserLoggingInResp.setToken(resp.getToken());
             Date tokenExpiration = resp.getTokenExpiration();
@@ -78,7 +76,7 @@ public class AuthServiceHelper implements ServiceHelper {
             OTADecoder decoder = new OTADecoder(inputStream);
 
             com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInReq avnLoggingInReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInReq.class);
-            ITAvnEquipLoginAuthService avnEquipLoginAuthService = (ITAvnEquipLoginAuthService) SpringContext.getInstance().getBean("avnEquipLoginAuthService");
+            com.zxq.iov.cloud.sec.tvowner.api.ITAvnAuthApi avnAuthApi = (ITAvnAuthApi) SpringContext.getInstance().getBean("avnAuthApi");
             AvnLoggingInReq req = new AvnLoggingInReq();
             req.setVin(vin);
             req.setAvnSN(avnLoggingInReq.getAvnSN());
@@ -88,7 +86,7 @@ public class AuthServiceHelper implements ServiceHelper {
             req.setTboxSN(avnLoggingInReq.getTboxSN());
             req.setTboxVer(avnLoggingInReq.getTboxVer());
             req.setWcdmaVer(avnLoggingInReq.getWcdmaVer());
-            AvnLoggingInResp resp = avnEquipLoginAuthService.AvnEquipLoginAuth(req);
+            AvnLoggingInResp resp = avnAuthApi.AvnEquipLoginAuth(req);
             com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInResp avnLoggingInResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInResp();
             avnLoggingInResp.setToken(token);
             avnLoggingInResp.setMaintenanceFlag(resp.isMaintenanceFlag());
@@ -115,6 +113,9 @@ public class AuthServiceHelper implements ServiceHelper {
 
             com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInReq mpUserLoggingInReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInReq.class);
             ITMobileLoginAuthService mobileLoginAuthService = (ITMobileLoginAuthService) SpringContext.getInstance().getBean("mobileLoginAuthService");
+//            com.zxq.iov.cloud.sec.tvowner.api.ITTMPAuthApi mPAuthApi = (com.zxq.iov.cloud.sec.tvowner.api.ITTMPAuthApi) SpringContext.getInstance().getBean("mPAuthApi");
+//            mPAuthApi.MPLoginVerify()
+//            mPAuthApi.MobileTokenAuth()
             MPUserLoggingInReq req = new MPUserLoggingInReq();
             req.setUid(uid);
             req.setDeviceId(mpUserLoggingInReq.getDeviceId());

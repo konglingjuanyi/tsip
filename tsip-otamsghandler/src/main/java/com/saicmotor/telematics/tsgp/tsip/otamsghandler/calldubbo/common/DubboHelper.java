@@ -141,6 +141,63 @@ public class DubboHelper {
         authList.add("502");
         authList.add("503");
 
+        messageList.add("781");
+        messageList.add("793");
+        messageList.add("493");
+        messageList.add("531");
+        messageList.add("533");
+        messageList.add("534");
+        messageList.add("2A1");
+        messageList.add("2A2");
+        messageList.add("2A3");
+        messageList.add("611");
+        messageList.add("612");
+        messageList.add("613");
+        messageList.add("614");
+        messageList.add("615");
+        messageList.add("616");
+        messageList.add("617");
+        messageList.add("618");
+        messageList.add("619");
+        messageList.add("651");
+
+        naviList.add("6A2");
+        naviList.add("6A3");
+        naviList.add("6B1");
+        naviList.add("6B2");
+        naviList.add("6B3");
+        naviList.add("6D1");
+        naviList.add("6D2");
+        naviList.add("6D3");
+        naviList.add("6D4");
+        naviList.add("6D5");
+        naviList.add("6D6");
+        naviList.add("6D7");
+        naviList.add("6D8");
+        naviList.add("6D9");
+        naviList.add("6DA");
+        naviList.add("241");
+        naviList.add("2C1");
+        naviList.add("2C2");
+        naviList.add("2G1");
+        naviList.add("551");
+        naviList.add("552");
+        naviList.add("553");
+        naviList.add("554");
+        naviList.add("555");
+        naviList.add("556");
+        naviList.add("557");
+        naviList.add("558");
+        naviList.add("559");
+        naviList.add("461");
+        naviList.add("471");
+        naviList.add("481");
+        naviList.add("342");
+
+        weatherList.add("2F5");
+        weatherList.add("2F6");
+
+
     }
 
     /**

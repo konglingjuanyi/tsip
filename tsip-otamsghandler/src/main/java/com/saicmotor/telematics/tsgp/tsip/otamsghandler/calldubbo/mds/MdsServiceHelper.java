@@ -5,7 +5,6 @@ import com.saicmotor.telematics.framework.core.exception.ApiException;
 import com.saicmotor.telematics.tsgp.otaadapter.asn.codec.OTADecoder;
 import com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.dispatcher.AVN_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.dispatcher.MP_OTARequest;
-import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.OperationType;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.MdsServiceEnum;
