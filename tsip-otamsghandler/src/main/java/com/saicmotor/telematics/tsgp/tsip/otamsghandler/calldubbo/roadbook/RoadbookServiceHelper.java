@@ -9,21 +9,28 @@ import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.*;
 import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.RoadBookCommentReq;
 import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.RoadBookDetailReq;
 import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.roadbook.RoadBookQueryReq;
+import com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.CityCode;
 import com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookBizService;
 import com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookCommentBizService;
 import com.saicmotor.telematics.tsgp.sp.roadbook.api.IRoadBookWeatherBizService;
+import com.saicmotor.telematics.tsgp.sp.roadbook.dto.CityWeather;
+import com.saicmotor.telematics.tsgp.sp.roadbook.dto.DayWeather;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.QueryValue;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.*;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.resp.RoadBookDetailResp;
 import com.saicmotor.telematics.tsgp.sp.roadbook.dto.resp.RoadBookQueryResp;
+import com.saicmotor.telematics.tsgp.sp.roadbook.dto.resp.RoadBookWeatherResp;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.RoadbookServiceEnum;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -117,6 +124,42 @@ public class RoadbookServiceHelper implements ServiceHelper {
             IRoadBookWeatherBizService roadBookWeatherBizService = (IRoadBookWeatherBizService) SpringContext.getInstance().getBean("roadBookWeatherBizService");
             //解码传递过来的参数
             RBWeatherInformationReq rbWeatherInformationReq = (RBWeatherInformationReq) decoder.decode(RBWeatherInformationReq.class);
+            RoadBookWeatherReq req = new RoadBookWeatherReq();
+            req.setDays(rbWeatherInformationReq.getDays());
+            req.setEndNumber(rbWeatherInformationReq.getStartEndNumber().getEndNumber());
+            req.setStartNumber(rbWeatherInformationReq.getStartEndNumber().getStartNumber());
+            req.setRoadBookId(rbWeatherInformationReq.getRbId());
+            RoadBookWeatherResp resp = roadBookWeatherBizService.queryRoadBookWeatherInfo(req,reqBodyDto);
+            RBWeatherInformationResp rbWeatherInformationResp = new RBWeatherInformationResp();
+            List<CityWeather> cityWeathers = resp.getCityWeatherList();
+            java.util.Collection<com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.CityWeather> ctw = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.CityWeather>();
+            for(CityWeather c : cityWeathers){
+                com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.CityWeather cw = new com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.CityWeather();
+                CityCode cc = new CityCode();
+                cc.setCityCode(c.getCityCode());
+                cw.setCityCode(cc);
+                List<DayWeather> dws = c.getDayWeathers();
+                java.util.Collection<com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.DayWeather> value = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.DayWeather>();
+                for(DayWeather dw : dws){
+                    com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.DayWeather weather = new com.saicmotor.telematics.tsgp.otaadapter.roadbook.v1_1.entity.weather.DayWeather();
+                    try {
+                        BeanUtils.copyProperties(weather,dw);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    value.add(weather);
+                }
+                cw.setDayWeathers(value);
+                ctw.add(cw);
+            }
+            rbWeatherInformationResp.setCityWeatherList(ctw);
+            rbWeatherInformationResp.setRecordsNumber(resp.getRecordsNumber());
+
+            request = HelperUtils.enCode_AVN_OTARequest(rbWeatherInformationResp,request);
+            //请求对象编码为字符串
+            requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
         }
         return requestBack;
     }
