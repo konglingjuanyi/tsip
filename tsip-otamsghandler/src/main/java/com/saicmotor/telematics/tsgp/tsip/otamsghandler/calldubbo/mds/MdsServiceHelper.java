@@ -30,6 +30,9 @@ public class MdsServiceHelper implements ServiceHelper{
     @Override
     public String callDubboService(RequestContext context) throws ApiException {
         String aid = context.getAid();
+        String uid = context.getUid();
+        if(StringUtils.isNotEmpty(uid))
+            uid = uid.replaceAll("^(0+)", "");
         String requestBack = null;
         //AVN
         if(aid.startsWith("2")){
@@ -60,7 +63,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq cityListDownloadReq = (com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadReq.class);
                 IAvnCityApi getCityListService = (IAvnCityApi) SpringContext.getInstance().getBean("avnCityApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq();
-                req.setUid(request.getDispatcherBody().getUid());
+                req.setUid(uid);
                 com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityType cityType = cityListDownloadReq.getCityType();
                 if(cityType.getValue().name().equals("all"))
                     req.setCityType(1);
@@ -93,7 +96,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 else
                     req.setOperation(2);
 
-                req.setUid(request.getDispatcherBody().getUid());
+                req.setUid(uid);
                 CitySettingResp resp = addOrRemoveConcernCitiesService.addOrRemoveConcernCities(req);
                 request = HelperUtils.enCode_AVN_OTARequest(resp, request);
                 //请求对象编码为字符串
@@ -144,7 +147,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadReq cityListDownloadReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadReq.class);
                 IAvnCityApi getCityListService = (IAvnCityApi) SpringContext.getInstance().getBean("avnCityApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.CityListDownloadReq();
-                req.setUid(request.getDispatcherBody().getUid());
+                req.setUid(uid);
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityType cityType = cityListDownloadReq.getCityType();
                 if(cityType.getValue().name().equals("all"))
                     req.setCityType(1);
@@ -174,7 +177,7 @@ public class MdsServiceHelper implements ServiceHelper{
             if(MdsServiceEnum.MPUSERINFOQUERY.toString().equals(context.getAid())){
                 IMPUserApi mPUserInfoQueryService = (IMPUserApi) SpringContext.getInstance().getBean("mPUserApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPUserInfoReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPUserInfoReq();
-                req.setUid(request.getDispatcherBody().getUid());
+                req.setUid(uid);
                 MPUserInfoResp resp = mPUserInfoQueryService.queryMPUserInfo(req);
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPUserInfoResp mPUserInfoResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPUserInfoResp();
                 mPUserInfoResp.setEmergencyMobile(resp.getEmergencyMobile());
@@ -200,7 +203,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPUserInfoUpdateReq mpUserInfoUpdateReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPUserInfoUpdateReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.MPUserInfoUpdateReq.class);
                 IMPUserApi mPUserInfoUpdateService = (IMPUserApi) SpringContext.getInstance().getBean("mPUserApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPUserInfoUpdateReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPUserInfoUpdateReq();
-                req.setUid(request.getDispatcherBody().getUid());
+                req.setUid(uid);
                 req.setNickName(new String(mpUserInfoUpdateReq.getNickName()));
                 MPUserInfoUpdateResp resp = mPUserInfoUpdateService.updateMPUserInfo(req);
                 request = HelperUtils.enCode_MP_OTARequest(resp, request);
@@ -282,7 +285,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 req.setPin(setPinCodeReq.getPin());
                 req.setRealName(new String(setPinCodeReq.getRealName()));
                 req.setSimInfo(setPinCodeReq.getSimInfo());
-                req.setUserId(request.getDispatcherBody().getUid());
+                req.setUserId(uid);
                 req.setVerificationCode(setPinCodeReq.getVerificationCode());
                 SetPinCodeResp resp = setPinCodeService.setPinCode(req);
                 request = HelperUtils.enCode_MP_OTARequest(resp, request);
@@ -305,7 +308,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 IMPVehicleApi addPersonalVehicleService = (IMPVehicleApi) SpringContext.getInstance().getBean("mPVehicleApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.AddPersonalVehicleReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.AddPersonalVehicleReq();
                 req.setVin(request.getDispatcherBody().getVin());
-                req.setUserId(request.getDispatcherBody().getUid());
+                req.setUserId(uid);
                 req.setBrandName(new String(addPersonalVehicleReq.getBrandName()));
                 req.setIdCardNo(addPersonalVehicleReq.getIdCardNo());
                 req.setModelId(addPersonalVehicleReq.getModelId());
@@ -337,7 +340,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 req.setSafeSimInfo(addOrgVehicleReq.getSafeSimInfo());
                 req.setTempSimInfo(addOrgVehicleReq.getTempSimInfo());
                 req.setVerificationCode(addOrgVehicleReq.getVerificationCode());
-                req.setUserId(request.getDispatcherBody().getUid());
+                req.setUserId(uid);
                 AddOrgVehicleResp resp = addOrgVehicleService.addOrgVehicle(req);
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddOrgVehicleResp addOrgVehicleResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddOrgVehicleResp();
                 Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo> cl = coverVinInfo(resp.getVinList());
@@ -357,7 +360,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 IMPUserApi setUserMobilePhoneService = (IMPUserApi) SpringContext.getInstance().getBean("mPUserApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.SetUserMobilePhoneReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.SetUserMobilePhoneReq();
                 req.setVerificationCode(setUserMobilePhoneReq.getVerificationCode());
-                req.setUid(request.getDispatcherBody().getUid());
+                req.setUid(uid);
                 req.setOperationType(setUserMobilePhoneReq.getOperationType().getIntegerForm());
                 req.setSimInfo(setUserMobilePhoneReq.getSimInfo());
                 SetUserMobilePhoneResp setUserMobilePhoneResp = setUserMobilePhoneService.setUserMobilePhone(req);
@@ -375,7 +378,7 @@ public class MdsServiceHelper implements ServiceHelper{
                 req.setPassword(mpFastRegisterReq.getPassword());
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterResp mpFastRegisterResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterResp();
                 MPFastRegisterResp resp = mPFastRegisterService.MPFastRegisterService(req);
-                mpFastRegisterResp.setUsername(resp.getUsername());
+                mpFastRegisterResp.setUsername(resp.getUserName());
                 request = HelperUtils.enCode_MP_OTARequest(mpFastRegisterResp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);

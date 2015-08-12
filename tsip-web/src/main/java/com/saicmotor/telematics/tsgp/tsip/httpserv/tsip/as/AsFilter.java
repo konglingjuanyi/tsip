@@ -1,4 +1,4 @@
-package com.saicmotor.telematics.tsgp.tsip.httpserv.tsip.avn;
+package com.saicmotor.telematics.tsgp.tsip.httpserv.tsip.as;
 
 import com.saicmotor.telematics.framework.core.common.SpringContext;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.base.exception.HTTPServException;
@@ -19,11 +19,12 @@ import java.io.InputStream;
 /**
  * Created by Administrator on 2015/7/17.
  */
-public class AvnFilter extends TFilter implements Filter {
+public class AsFilter extends TFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AvnFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsFilter.class);
 
     private static String  CHARSET = "UTF-8";
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -48,7 +49,7 @@ public class AvnFilter extends TFilter implements Filter {
     String callAppService(HttpServletRequest res){
         String code = processRequest(res);
         IApplicationService applicationService = SpringContext.getInstance().getBean(ApplicationServiceImpl.class);
-        String result = applicationService.execute(Cfg.PL_STR_MAP.get("005"), code, "005");
+        String result = applicationService.execute(Cfg.PL_STR_MAP.get("014"), code, "014");
         return result;
     }
 

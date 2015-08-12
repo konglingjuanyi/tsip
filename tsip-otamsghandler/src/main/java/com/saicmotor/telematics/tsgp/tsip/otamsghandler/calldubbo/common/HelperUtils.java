@@ -6,6 +6,8 @@ import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.dispatcher.MP_OTA
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.helper.AdapterHelper;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/7/28.
@@ -59,5 +61,20 @@ public class HelperUtils {
         //return success status
         request.getDispatcherBody().setResult(0);
         return request;
+    }
+
+    public static Map<String, Integer> getOperationTypeMap() {
+        Map<String,Integer> operationTypeMap = new HashMap<String,Integer>();
+        operationTypeMap.put("verify",0);
+        operationTypeMap.put("pin", 1);
+        operationTypeMap.put("register", 2);
+        operationTypeMap.put("retrieve", 3);
+        operationTypeMap.put("addVehicle", 4);
+        operationTypeMap.put("setMainPhoneNumber", 5);
+        operationTypeMap.put("extend3", 6);
+        operationTypeMap.put("extend4", 7);
+        operationTypeMap.put("extend5", 8);
+        operationTypeMap.put("extend6", 9);
+        return operationTypeMap;
     }
 }

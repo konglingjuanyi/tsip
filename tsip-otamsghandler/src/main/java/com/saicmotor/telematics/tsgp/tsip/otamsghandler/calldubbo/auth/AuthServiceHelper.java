@@ -11,21 +11,19 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.AuthServiceEnum;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
-import com.zxq.iov.cloud.sec.tvowner.api.*;
+import com.zxq.iov.cloud.sec.tvowner.api.ITAvnAuthApi;
 import com.zxq.iov.cloud.sec.tvowner.api.dto.*;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.IGetMobileDynamicPasswordApi;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.IMobileVerificationAuthApi;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationCheckResp;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationReq;
 import com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationResp;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/7/28.
@@ -40,6 +38,8 @@ public class AuthServiceHelper implements ServiceHelper {
         String uid = context.getUid();
         String token = context.getToken();
         String requestBack = null;
+        if(StringUtils.isNotEmpty(uid))
+            uid = uid.replaceAll("^(0+)", "");
 
         //AVN用户登录验证
         if(AuthServiceEnum.USERLOGINAUTH.getAid().equals(aid)){
@@ -55,13 +55,13 @@ public class AuthServiceHelper implements ServiceHelper {
             req.setToken(token);
             req.setUid(uid);
             req.setVin(vin);
-            AvnUserLoggingInResp resp = avnAuthApi.AvnUserLoginAuth(req);
+            AvnUserLoggingInResp resp = avnAuthApi.avnUserLoginAuth(req);
             com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInResp avnUserLoggingInResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_UserLoggingInResp();
             avnUserLoggingInResp.setToken(resp.getToken());
             Date tokenExpiration = resp.getTokenExpiration();
             if(null != tokenExpiration) {
                 com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.Timestamp tp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.Timestamp();
-                tp.setSeconds(tokenExpiration.getTime());
+                tp.setSeconds(tokenExpiration.getTime()/1000);
                 avnUserLoggingInResp.setTokenExpiration(tp);
             }
             request = HelperUtils.enCode_AVN_OTARequest(avnUserLoggingInResp, request);
@@ -86,16 +86,17 @@ public class AuthServiceHelper implements ServiceHelper {
             req.setTboxSN(avnLoggingInReq.getTboxSN());
             req.setTboxVer(avnLoggingInReq.getTboxVer());
             req.setWcdmaVer(avnLoggingInReq.getWcdmaVer());
-            AvnLoggingInResp resp = avnAuthApi.AvnEquipLoginAuth(req);
+            AvnLoggingInResp resp = avnAuthApi.avnEquipLoginAuth(req);
             com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInResp avnLoggingInResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.login.AVN_LoggingInResp();
-            avnLoggingInResp.setToken(token);
+            avnLoggingInResp.setToken(resp.getToken());
             avnLoggingInResp.setMaintenanceFlag(resp.isMaintenanceFlag());
             avnLoggingInResp.setSignalBookFlag(resp.isSignalBookFlag());
             avnLoggingInResp.setTboxFlag(resp.isTboxFlag());
             Date tspServiceExpiration = resp.getTspServiceExpiration();
             if(null != tspServiceExpiration) {
                 com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.Timestamp tp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.Timestamp();
-                tp.setSeconds(tspServiceExpiration.getTime());
+                tp.setSeconds(tspServiceExpiration.getTime()/1000);
+                String dd = tp.toString();
                 avnLoggingInResp.setTspServiceExpiration(tp);
             }
             avnLoggingInResp.setWcdmaFlag(resp.isWcdmaFlag());
@@ -112,21 +113,18 @@ public class AuthServiceHelper implements ServiceHelper {
             OTADecoder decoder = new OTADecoder(inputStream);
 
             com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInReq mpUserLoggingInReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInReq.class);
-            ITMobileLoginAuthService mobileLoginAuthService = (ITMobileLoginAuthService) SpringContext.getInstance().getBean("mobileLoginAuthService");
-//            com.zxq.iov.cloud.sec.tvowner.api.ITTMPAuthApi mPAuthApi = (com.zxq.iov.cloud.sec.tvowner.api.ITTMPAuthApi) SpringContext.getInstance().getBean("mPAuthApi");
-//            mPAuthApi.MPLoginVerify()
-//            mPAuthApi.MobileTokenAuth()
+            com.zxq.iov.cloud.sec.tvowner.api.ITMPAuthApi mPAuthApi = (com.zxq.iov.cloud.sec.tvowner.api.ITMPAuthApi) SpringContext.getInstance().getBean("mPAuthApi");
             MPUserLoggingInReq req = new MPUserLoggingInReq();
             req.setUid(uid);
             req.setDeviceId(mpUserLoggingInReq.getDeviceId());
             req.setPassword(mpUserLoggingInReq.getPassword());
-            MPUserLoggingInResp resp = mobileLoginAuthService.mobileLoginAuth(req);
+            MPUserLoggingInResp resp = mPAuthApi.mobileLoginAuth(req);
             com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInResp mpUserLoggingInResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.MP_UserLoggingInResp();
-            mpUserLoggingInResp.setToken(token);
+            mpUserLoggingInResp.setToken(resp.getToken());
             Date tokenExpiration = resp.getTokenExpiration();
             if(null != tokenExpiration) {
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.Timestamp tp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.Timestamp();
-                tp.setSeconds(tokenExpiration.getTime());
+                tp.setSeconds(tokenExpiration.getTime()/1000);
                 mpUserLoggingInResp.setTokenExpiration(tp);
             }
 
@@ -137,13 +135,18 @@ public class AuthServiceHelper implements ServiceHelper {
                 vinInfo.setIsAcivate(v.isAcivate());
                 try {
                     vinInfo.setName(v.getName().getBytes("UTF-8"));
+                    vinInfo.setModelName(v.getModelName().getBytes("UTF-8"));
+                    vinInfo.setBrandName(v.getBrandName().getBytes("UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+                vinInfo.setSeries(v.getSeries());
                 vinInfo.setVin(v.getVin());
                 vinList.add(vinInfo);
             }
             mpUserLoggingInResp.setVinList(vinList);
+            mpUserLoggingInResp.setUserName(resp.getUserName());
+            mpUserLoggingInResp.setUserPhoto(String.valueOf(resp.getUserPhoto()));
             request = HelperUtils.enCode_MP_OTARequest(mpUserLoggingInResp, request);
             //请求对象编码为字符串
             requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);
@@ -160,8 +163,9 @@ public class AuthServiceHelper implements ServiceHelper {
             TCMP_VerificationReq tcmpVerificationReq = (TCMP_VerificationReq)decoder.decode(TCMP_VerificationReq.class);
             IGetMobileDynamicPasswordApi getMobileDynamicPasswordApi = (IGetMobileDynamicPasswordApi) SpringContext.getInstance().getBean("getMobileDynamicPasswordApi");
             MPVerificationReq req = new MPVerificationReq();
-            com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.OperationType op = tcmpVerificationReq.getOperationType();
-//            req.setOperationType(tcmpVerificationReq.getOperationType().getValue().getIntegerForm());
+
+            int operationTypeValue = getOperationTypeValue(tcmpVerificationReq);
+            req.setOperationType(operationTypeValue);
             req.setSimInfo(tcmpVerificationReq.getSimInfo());
             req.setUid(uid);
             MPVerificationResp resp = getMobileDynamicPasswordApi.getMobileDynamicPassword(req);
@@ -182,7 +186,8 @@ public class AuthServiceHelper implements ServiceHelper {
             com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationCheckReq req  = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationCheckReq();
             req.setVerificationCode(tcmpVerificationCheckReq.getVerificationCode());
             req.setSimInfo(tcmpVerificationCheckReq.getSimInfo());
-            req.setOperationType(tcmpVerificationCheckReq.getOperationType().getIntegerForm());
+            int operationTypeValue = getOperationTypeValue(tcmpVerificationCheckReq);
+            req.setOperationType(operationTypeValue);
             MPVerificationCheckResp resp = mobileVerificationAuthApi.mobileVerificationAuth(req);
             com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.MPVerificationCheckResp mpVerificationCheckResp = new com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.MPVerificationCheckResp();
             mpVerificationCheckResp.setVerificationFlag(resp.isVerificationFlag());
@@ -192,5 +197,25 @@ public class AuthServiceHelper implements ServiceHelper {
         }
 
         return requestBack;
+    }
+
+    /**
+     *
+     * @param tcmpVerificationReq
+     * @return
+     */
+    private int getOperationTypeValue(TCMP_VerificationReq tcmpVerificationReq) {
+        Map<String,Integer> map = HelperUtils.getOperationTypeMap();
+        return map.get(tcmpVerificationReq.getOperationType().getValue().name());
+    }
+
+    /**
+     *
+     * @param tcmpVerificationCheckReq
+     * @return
+     */
+    private int getOperationTypeValue(MPVerificationCheckReq tcmpVerificationCheckReq) {
+        Map<String,Integer> map = HelperUtils.getOperationTypeMap();
+        return map.get(tcmpVerificationCheckReq.getOperationType().getValue().name());
     }
 }

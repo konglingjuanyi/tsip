@@ -20,6 +20,7 @@ import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.ServiceHelper;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.HelperUtils;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.calldubbo.common.RoadbookServiceEnum;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.context.RequestContext;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -42,6 +43,8 @@ public class RoadbookServiceHelper implements ServiceHelper {
 
         String aid = context.getAid();
         String uid = context.getUid();
+        if(StringUtils.isNotEmpty(uid))
+            uid = uid.replaceAll("^(0+)", "");
         String vin = context.getVin();
         String token = context.getToken();
         String  pid = context.getPlatform();
@@ -83,7 +86,7 @@ public class RoadbookServiceHelper implements ServiceHelper {
             //请求对象编码为字符串
             requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
         }
-        if(RoadbookServiceEnum.DETAIL.getAid().equals(context.getAid())) {
+        if(RoadbookServiceEnum.DETAIL.getAid().equals(aid)) {
             //将传递过来的参数进行解码
             RoadBookDetailReq roadBookDetailReq = (RoadBookDetailReq) decoder.decode(RoadBookDetailReq.class);
             com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.RoadBookDetailReq req = new com.saicmotor.telematics.tsgp.sp.roadbook.dto.req.RoadBookDetailReq();
@@ -96,7 +99,7 @@ public class RoadbookServiceHelper implements ServiceHelper {
             requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
 
         }
-        if(RoadbookServiceEnum.COMMENTRECEIVE.getAid().equals(context.getAid())) {
+        if(RoadbookServiceEnum.COMMENTRECEIVE.getAid().equals(aid)) {
             IRoadBookCommentBizService roadBookCommentBizService = (IRoadBookCommentBizService) SpringContext.getInstance().getBean("roadBookCommentBizService");
             //解码传递过来的参数
             RoadBookCommentReq roadBookCommentReq = (RoadBookCommentReq) decoder.decode(RoadBookCommentReq.class);
@@ -110,7 +113,7 @@ public class RoadbookServiceHelper implements ServiceHelper {
             requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
 
         }
-        if(RoadbookServiceEnum.WEATHERINFOMATION.getAid().equals(context.getAid())) {
+        if(RoadbookServiceEnum.WEATHERINFOMATION.getAid().equals(aid)) {
             IRoadBookWeatherBizService roadBookWeatherBizService = (IRoadBookWeatherBizService) SpringContext.getInstance().getBean("roadBookWeatherBizService");
             //解码传递过来的参数
             RBWeatherInformationReq rbWeatherInformationReq = (RBWeatherInformationReq) decoder.decode(RBWeatherInformationReq.class);

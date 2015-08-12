@@ -35,6 +35,15 @@
     </filter-mapping>
 
     <filter>
+        <filter-name>asFilter</filter-name>
+        <filter-class>com.saicmotor.telematics.tsgp.tsip.httpserv.tsip.as.AsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>asFilter</filter-name>
+        <url-pattern>*.as</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>avnFilter</filter-name>
         <filter-class>com.saicmotor.telematics.tsgp.tsip.httpserv.tsip.avn.AvnFilter</filter-class>
     </filter>
