@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Administrator on 2015/7/28.
@@ -70,8 +67,8 @@ public class MdsServiceHelper implements ServiceHelper{
                 else
                     req.setCityType(0);
                 CityListDownloadResp resp = getCityListService.getCityList(req);
-                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp();
-                cityListDownloadResp = coverAvnObject(resp);
+//                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = null;
+                com.saicmotor.telematics.tsgp.otaadapter.avn.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = coverAvnObject(resp);
                 request = HelperUtils.enCode_AVN_OTARequest(cityListDownloadResp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);
@@ -154,8 +151,8 @@ public class MdsServiceHelper implements ServiceHelper{
                 else
                     req.setCityType(0);
                 CityListDownloadResp resp = getCityListService.getCityList(req);
-                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp();
-                cityListDownloadResp = coverMpObject(resp);
+//                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp();
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.city.CityListDownloadResp cityListDownloadResp = coverMpObject(resp);
                 request = HelperUtils.enCode_MP_OTARequest(cityListDownloadResp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);
@@ -281,14 +278,26 @@ public class MdsServiceHelper implements ServiceHelper{
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.SetPinCodeReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.SetPinCodeReq();
                 req.setVin(request.getDispatcherBody().getVin());
                 req.setIdcardNo(setPinCodeReq.getIdCardNo());
-                req.setOperationType(setPinCodeReq.getOperationType().getIntegerForm());
+                if(null != setPinCodeReq.getOperationType())
+                {
+                    Map<String,Integer> map = HelperUtils.getOperationTypeMap();
+                    req.setOperationType(map.get(setPinCodeReq.getOperationType().getValue().name()));
+                }
                 req.setPin(setPinCodeReq.getPin());
-                req.setRealName(new String(setPinCodeReq.getRealName()));
-                req.setSimInfo(setPinCodeReq.getSimInfo());
+                try {
+                    req.setRealName(new String(setPinCodeReq.getRealName(),"UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String simnum = setPinCodeReq.getSimInfo();
+                if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                    simnum = simnum.substring(8);
+                req.setSimInfo(simnum);
                 req.setUserId(uid);
                 req.setVerificationCode(setPinCodeReq.getVerificationCode());
-                SetPinCodeResp resp = setPinCodeService.setPinCode(req);
-                request = HelperUtils.enCode_MP_OTARequest(resp, request);
+                setPinCodeService.setPinCode(req);
+//                SetPinCodeResp resp = setPinCodeService.setPinCode(req);
+//                request = HelperUtils.enCode_MP_OTARequest(resp, request);
                 //请求对象编码为字符串
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
             }
@@ -334,7 +343,11 @@ public class MdsServiceHelper implements ServiceHelper{
                 req.setModelId(addOrgVehicleReq.getModelId());
                 req.setIdCardNo(addOrgVehicleReq.getIdCardNo());
                 req.setBrandName(new String(addOrgVehicleReq.getBrandName()));
-                req.setOperationType(addOrgVehicleReq.getOperationType().getIntegerForm());
+                if(null != addOrgVehicleReq.getOperationType())
+                {
+                    Map<String,Integer> map = HelperUtils.getOperationTypeMap();
+                    req.setOperationType(map.get(addOrgVehicleReq.getOperationType().getValue().name()));
+                }
                 req.setOrgName(new String(addOrgVehicleReq.getOrgName()));
                 req.setOrgNo(addOrgVehicleReq.getOrgNo());
                 req.setSafeSimInfo(addOrgVehicleReq.getSafeSimInfo());
@@ -350,10 +363,41 @@ public class MdsServiceHelper implements ServiceHelper{
                 requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
             }
             //添加个人车辆手机验证码验证
-//            if(MdsServiceEnum.ADDPERSONALVEHICLEMPAUTH.toString().equals(context.getAid())){
-//                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq req = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq.class);
-//                ISetUserMobilePhoneService setUserMobilePhoneService = (ISetUserMobilePhoneService) SpringContext.getInstance().getBean("ISetUserMobilePhoneService");
-//            }
+            if(MdsServiceEnum.ADDPERSONALVEHICLEMPAUTH.toString().equals(context.getAid())){
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq req = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthReq.class);
+                IAddPersonalVehicleMPAuthApi addPersonalVehicleMPAuthApi = (IAddPersonalVehicleMPAuthApi) SpringContext.getInstance().getBean("addPersonalVehicleMPAuthApi");
+                AddPersonalVehicleMPAuthReq adPersonalVehicleMPAuthReq = new AddPersonalVehicleMPAuthReq();
+                if(null != req.getOperationType())
+                {
+                    Map<String,Integer> map = HelperUtils.getOperationTypeMap();
+                    adPersonalVehicleMPAuthReq.setOperationType(map.get(req.getOperationType().getValue().name()));
+                }
+                String simnum = req.getSimInfo();
+                if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                    simnum = simnum.substring(8);
+                adPersonalVehicleMPAuthReq.setSimInfo(simnum);
+                adPersonalVehicleMPAuthReq.setSimInfo(simnum);
+                adPersonalVehicleMPAuthReq.setVerificationCode(req.getVerificationCode());
+                AddPersonalVehicleMPAuthResp resp = addPersonalVehicleMPAuthApi.AddPersonalVehicleMPAuth(adPersonalVehicleMPAuthReq);
+                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthResp addPersonalVehicleMPAuthResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.AddPersonalVehicleMPAuthResp();
+                addPersonalVehicleMPAuthResp.setVerificationFlag(resp.isVerificationFlag());
+                List<VinNo> vinNos = resp.getVinList();
+                Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VinNo> c = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VinNo>();
+                for(VinNo v :vinNos){
+                    com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VinNo vinNo = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.VinNo();
+                    vinNo.setIdCardNo(v.getIdCardNo());
+                    try {
+                        vinNo.setUserName(v.getUserName().getBytes("UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    vinNo.setVinNo(v.getVinNo());
+                    c.add(vinNo);
+                }
+                request = HelperUtils.enCode_MP_OTARequest(addPersonalVehicleMPAuthResp, request);
+                //请求对象编码为字符串
+                requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
+            }
             //      用户主手机号码设置
             if(MdsServiceEnum.SETUSERMOBILEPHONE.toString().equals(context.getAid())){
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.SetUserMobilePhoneReq setUserMobilePhoneReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.SetUserMobilePhoneReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.vehicle.SetUserMobilePhoneReq.class);
@@ -361,8 +405,15 @@ public class MdsServiceHelper implements ServiceHelper{
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.SetUserMobilePhoneReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.SetUserMobilePhoneReq();
                 req.setVerificationCode(setUserMobilePhoneReq.getVerificationCode());
                 req.setUid(uid);
-                req.setOperationType(setUserMobilePhoneReq.getOperationType().getIntegerForm());
-                req.setSimInfo(setUserMobilePhoneReq.getSimInfo());
+                if(null != setUserMobilePhoneReq.getOperationType())
+                {
+                    Map<String,Integer> map = HelperUtils.getOperationTypeMap();
+                    req.setOperationType(map.get(setUserMobilePhoneReq.getOperationType().getValue().name()));
+                }
+                String simnum = setUserMobilePhoneReq.getSimInfo();
+                if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                    simnum = simnum.substring(8);
+                req.setSimInfo(simnum);
                 SetUserMobilePhoneResp setUserMobilePhoneResp = setUserMobilePhoneService.setUserMobilePhone(req);
                 request = HelperUtils.enCode_MP_OTARequest(setUserMobilePhoneResp, request);
                 //请求对象编码为字符串
@@ -373,7 +424,10 @@ public class MdsServiceHelper implements ServiceHelper{
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterReq mpFastRegisterReq = (com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterReq)decoder.decode(com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterReq.class);
                 IMPUserApi mPFastRegisterService = (IMPUserApi) SpringContext.getInstance().getBean("mPUserApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPFastRegisterReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPFastRegisterReq();
-                req.setSimInfo(mpFastRegisterReq.getSimInfo());
+                String simnum = mpFastRegisterReq.getSimInfo();
+                if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                    simnum = simnum.substring(8);
+                req.setSimInfo(simnum);
                 req.setVerificationCode(mpFastRegisterReq.getVerificationCode());
                 req.setPassword(mpFastRegisterReq.getPassword());
                 com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterResp mpFastRegisterResp = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_0.MPFastRegisterResp();
@@ -389,7 +443,11 @@ public class MdsServiceHelper implements ServiceHelper{
                 IMPUserApi updatePasswordService = (IMPUserApi) SpringContext.getInstance().getBean("mPUserApi");
                 com.zxq.iov.cloud.sp.mds.tcmp.api.dto.UpdatePasswordReq req = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.UpdatePasswordReq();
                 req.setPassword(updatePasswordReq.getPassword());
-                req.setSimInfo(updatePasswordReq.getSimInfo());
+
+                String simnum = updatePasswordReq.getSimInfo();
+                if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                    simnum = simnum.substring(8);
+                req.setSimInfo(simnum);
                 req.setVerificationCode(updatePasswordReq.getVerificationCode());
                 UpdatePasswordResp resp = updatePasswordService.updatePassword(req);
                 request = HelperUtils.enCode_MP_OTARequest(resp, request);
@@ -546,4 +604,5 @@ public class MdsServiceHelper implements ServiceHelper{
         }
         return vinInfos;
     }
+
 }

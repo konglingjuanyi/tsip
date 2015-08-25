@@ -57,7 +57,7 @@ public class ExceptionHandler {
         if(e.getClass().equals(ServLayerException.class)){
             ServLayerException sle = (ServLayerException)e;
             try{
-//                LogHelper.error(logger, RequestContext.getContext()==null?new RequestContext():RequestContext.getContext(), e);
+//                LogHelper.error(logger, RequestContext.getContext()==null?new RequestContext():RequestContext.getContext(), sle);
                 //从ErrorMessageHelper获取异常信息
                 Integer errorCode = Integer.valueOf(sle.getCode());
                 String errorMessage = ErrorMessageHelper.getErrorMessage(sle.getCode());

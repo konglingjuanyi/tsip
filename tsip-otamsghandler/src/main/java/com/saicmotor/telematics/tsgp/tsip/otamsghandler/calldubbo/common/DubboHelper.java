@@ -127,7 +127,7 @@ public class DubboHelper {
         vpList_v2.add("5BB");
         vpList_v2.add("5BC");
         vpList_v1.add("5C1");
-        vpList_v1.add("5D1");
+//        vpList_v1.add("5D1");
         vpList_v1.add("5D2");
         vpList_v1.add("5D3");
         vpList_v1.add("5D4");
@@ -205,7 +205,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isNavi(String aid){
+    public static boolean isNavi(String aid){
         return naviList.contains(aid) ? true : false;
     }
 
@@ -214,7 +214,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isMessage(String aid){
+    public static boolean isMessage(String aid){
         return messageList.contains(aid) ? true :false;
     }
 
@@ -223,7 +223,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isMds(String aid){
+    public static boolean isMds(String aid){
         return mdsList.contains(aid) ? true : false;
     }
 
@@ -232,7 +232,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isRoadBook(String aid){
+    public static boolean isRoadBook(String aid){
         return roadBookList.contains(aid) ? true : false;
     }
 
@@ -242,7 +242,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isAuth(String aid){
+    public static boolean isAuth(String aid){
         return authList.contains(aid) ? true : false;
     }
 
@@ -269,7 +269,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isVp(String aid){
+    public static boolean isVp(String aid){
         return isVp1(aid) || isVp2(aid) ? true : false;
     }
 
@@ -278,7 +278,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isAs(String aid){
+    public static boolean isAs(String aid){
         return aid.startsWith("A");
     }
 
@@ -287,7 +287,7 @@ public class DubboHelper {
      * @param aid
      * @return
      */
-    private static boolean isWeather(String aid){
+    public static boolean isWeather(String aid){
         return weatherList.contains(aid) ? true :false;
     }
 

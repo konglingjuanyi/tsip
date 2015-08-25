@@ -1,12 +1,10 @@
 package com.saicmotor.telematics.tsgp.tsip.httpserv.tsip.mp;
 
 import com.saicmotor.telematics.framework.core.common.SpringContext;
-import com.saicmotor.telematics.tsgp.tsip.httpserv.base.exception.HTTPServException;
 import com.saicmotor.telematics.tsgp.tsip.httpserv.tsip.TFilter;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.configure.Cfg;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.service.ApplicationServiceImpl;
 import com.saicmotor.telematics.tsgp.tsip.otamsghandler.service.IApplicationService;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +12,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by Administrator on 2015/7/17.

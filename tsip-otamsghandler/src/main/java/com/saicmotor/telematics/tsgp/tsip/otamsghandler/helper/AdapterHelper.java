@@ -18,10 +18,16 @@ import com.saicmotor.telematics.tsgp.otaadapter.cc.entity.dispatcher.CC_OTAReque
 import com.saicmotor.telematics.tsgp.otaadapter.cc.service.CCAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.isp.entity.dispatcher.ISP_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.isp.service.ISPAdapterServiceImpl;
+import com.saicmotor.telematics.tsgp.otaadapter.message.v1_1.entity.dispatcher.Message_OTARequest;
+import com.saicmotor.telematics.tsgp.otaadapter.message.v1_1.service.MessageAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.dispatcher.MP_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.service.MPAdapterServiceImpl;
+import com.saicmotor.telematics.tsgp.otaadapter.navi.v1_1.entity.dispatcher.Navi_OTARequest;
+import com.saicmotor.telematics.tsgp.otaadapter.navi.v1_1.service.NaviAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.dispatcher.TCMP_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.tcmp.service.TCMPAdapterServiceImpl;
+import com.saicmotor.telematics.tsgp.otaadapter.vp.v1_1.entity.dispatcher.VP_OTARequest;
+import com.saicmotor.telematics.tsgp.otaadapter.vp.v1_1.service.VPAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaadapter.wxg4as.entity.dispatcher.WXG4AS_OTARequest;
 import com.saicmotor.telematics.tsgp.otaadapter.wxg4as.service.WXG4ASAdapterServiceImpl;
 import com.saicmotor.telematics.tsgp.otaaddpter.weather.entity.dispatcher.Weather_OTARequest;
@@ -60,23 +66,31 @@ public class AdapterHelper {
         adapterMap.put(Cfg.PLATFORM_MP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(MPAdapterServiceImpl.class));
 //        adapterMap.put(Cfg.PLATFORM_B2C + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(B2CAdapterServiceImpl.class));
 //        adapterMap.put(Cfg.PLATFORM_CC + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(CCAdapterServiceImpl.class));
-//        adapterMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(TCMPAdapterServiceImpl.class));
-//        adapterMap.put(Cfg.PLATFORM_WXG4AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WXG4ASAdapterServiceImpl.class));
+        adapterMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(TCMPAdapterServiceImpl.class));
+        adapterMap.put(Cfg.PLATFORM_WXG4AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WXG4ASAdapterServiceImpl.class));
 //        adapterMap.put(Cfg.PLATFORM_ASM + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WXG4ASAdapterServiceImpl.class));
-//        adapterMap.put(Cfg.PLATFORM_AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(ASAdapterServiceImpl.class));
+        adapterMap.put(Cfg.PLATFORM_AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(ASAdapterServiceImpl.class));
 //        adapterMap.put(Cfg.PLATFORM_ISP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(ISPAdapterServiceImpl.class));
 //        adapterMap.put(Cfg.PLATFORM_WEATHER + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, SpringContext.getInstance().getBean(WeatherAdapterServiceImpl.class));
+        //ADD BY JACKSPO
+        adapterMap.put(Cfg.PLATFORM_MESSAGE + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION,SpringContext.getInstance().getBean(MessageAdapterServiceImpl.class));
+        adapterMap.put(Cfg.PLATFORM_VP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION,SpringContext.getInstance().getBean(VPAdapterServiceImpl.class));
+        adapterMap.put(Cfg.PLATFORM_NAVI + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION,SpringContext.getInstance().getBean(NaviAdapterServiceImpl.class));
 
         requestObjMap.put(Cfg.PLATFORM_AVN + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, AVN_OTARequest.class);
         requestObjMap.put(Cfg.PLATFORM_MP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, MP_OTARequest.class);
 //        requestObjMap.put(Cfg.PLATFORM_B2C + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, B2C_OTARequest.class);
 //        requestObjMap.put(Cfg.PLATFORM_CC + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, CC_OTARequest.class);
-//        requestObjMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, TCMP_OTARequest.class);
-//        requestObjMap.put(Cfg.PLATFORM_WXG4AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, WXG4AS_OTARequest.class);
+        requestObjMap.put(Cfg.PLATFORM_TCMP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, TCMP_OTARequest.class);
+        requestObjMap.put(Cfg.PLATFORM_WXG4AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, WXG4AS_OTARequest.class);
 //        requestObjMap.put(Cfg.PLATFORM_ASM + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, WXG4AS_OTARequest.class);
-//        requestObjMap.put(Cfg.PLATFORM_AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, AS_OTARequest.class);
+        requestObjMap.put(Cfg.PLATFORM_AS + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, AS_OTARequest.class);
 //        requestObjMap.put(Cfg.PLATFORM_ISP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, ISP_OTARequest.class);
 //        requestObjMap.put(Cfg.PLATFORM_WEATHER + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, Weather_OTARequest.class);
+        //ADD BY JACKSPO
+        requestObjMap.put(Cfg.PLATFORM_MESSAGE + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, Message_OTARequest.class);
+        requestObjMap.put(Cfg.PLATFORM_VP + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, VP_OTARequest.class);
+        requestObjMap.put(Cfg.PLATFORM_NAVI + Cfg.CONNECTOR + Cfg.DEFAULT_VERSION, Navi_OTARequest.class);
 
         if (Cfg.VERSION_PATH_MAP != null) {
             Iterator it = Cfg.VERSION_PATH_MAP.entrySet().iterator();

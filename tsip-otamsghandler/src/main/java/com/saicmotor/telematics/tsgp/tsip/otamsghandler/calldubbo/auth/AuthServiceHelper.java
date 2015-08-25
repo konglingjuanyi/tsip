@@ -64,6 +64,14 @@ public class AuthServiceHelper implements ServiceHelper {
                 tp.setSeconds(tokenExpiration.getTime()/1000);
                 avnUserLoggingInResp.setTokenExpiration(tp);
             }
+            String newUid = resp.getUid();
+            int lenth = newUid.length();
+            if(StringUtils.isNotEmpty(newUid)){
+                for(int i=0;i<(50-lenth);i++){
+                    newUid = "0"+newUid;
+                }
+            }
+            request.getDispatcherBody().setUid(newUid);
             request = HelperUtils.enCode_AVN_OTARequest(avnUserLoggingInResp, request);
             //请求对象编码为字符串
             requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(), request);
@@ -127,26 +135,37 @@ public class AuthServiceHelper implements ServiceHelper {
                 tp.setSeconds(tokenExpiration.getTime()/1000);
                 mpUserLoggingInResp.setTokenExpiration(tp);
             }
-
             Collection<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo> vinList = new ArrayList<com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo>();
             List<Vin> vins = resp.getVinList();
-            for(Vin v : vins){
-                com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo vinInfo = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo();
-                vinInfo.setIsAcivate(v.isAcivate());
-                try {
-                    vinInfo.setName(v.getName().getBytes("UTF-8"));
-                    vinInfo.setModelName(v.getModelName().getBytes("UTF-8"));
-                    vinInfo.setBrandName(v.getBrandName().getBytes("UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+            if(null != vins) {
+                for (Vin v : vins) {
+                    com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo vinInfo = new com.saicmotor.telematics.tsgp.otaadapter.mp.v1_1.entity.login.v2_1.VinInfo();
+                    vinInfo.setIsAcivate(v.isAcivate());
+                    try {
+                        vinInfo.setName(v.getName().getBytes("UTF-8"));
+                        vinInfo.setModelName(v.getModelName().getBytes("UTF-8"));
+                        vinInfo.setBrandName(v.getBrandName().getBytes("UTF-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    vinInfo.setSeries(v.getSeries());
+                    vinInfo.setVin(v.getVin());
+                    vinInfo.setVehiclePhoto(v.getVehiclePhoto());
+                    vinList.add(vinInfo);
                 }
-                vinInfo.setSeries(v.getSeries());
-                vinInfo.setVin(v.getVin());
-                vinList.add(vinInfo);
             }
-            mpUserLoggingInResp.setVinList(vinList);
+            if(null != vinList && vinList.size()>0)
+                mpUserLoggingInResp.setVinList(vinList);
             mpUserLoggingInResp.setUserName(resp.getUserName());
             mpUserLoggingInResp.setUserPhoto(String.valueOf(resp.getUserPhoto()));
+            String newUid = resp.getUid();
+            int lenth = newUid.length();
+            if(StringUtils.isNotEmpty(newUid)){
+                for(int i=0;i<(50-lenth);i++){
+                    newUid = "0"+newUid;
+                }
+            }
+            request.getDispatcherBody().setUid(newUid);
             request = HelperUtils.enCode_MP_OTARequest(mpUserLoggingInResp, request);
             //请求对象编码为字符串
             requestBack = HelperUtils.changeObj2String(RequestContext.getContext().getPlatform(), RequestContext.getContext().getClientVersion(),request);
@@ -166,7 +185,10 @@ public class AuthServiceHelper implements ServiceHelper {
 
             int operationTypeValue = getOperationTypeValue(tcmpVerificationReq);
             req.setOperationType(operationTypeValue);
-            req.setSimInfo(tcmpVerificationReq.getSimInfo());
+            String simnum = tcmpVerificationReq.getSimInfo();
+            if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                simnum = simnum.substring(8);
+            req.setSimInfo(simnum);
             req.setUid(uid);
             MPVerificationResp resp = getMobileDynamicPasswordApi.getMobileDynamicPassword(req);
             com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.MPVerificationResp mpVerificationResp = new com.saicmotor.telematics.tsgp.otaadapter.tcmp.entity.login.MPVerificationResp();
@@ -185,7 +207,10 @@ public class AuthServiceHelper implements ServiceHelper {
             IMobileVerificationAuthApi mobileVerificationAuthApi = (IMobileVerificationAuthApi) SpringContext.getInstance().getBean("mobileVerificationAuthApi");
             com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationCheckReq req  = new com.zxq.iov.cloud.sp.mds.tcmp.api.dto.MPVerificationCheckReq();
             req.setVerificationCode(tcmpVerificationCheckReq.getVerificationCode());
-            req.setSimInfo(tcmpVerificationCheckReq.getSimInfo());
+            String simnum = tcmpVerificationCheckReq.getSimInfo();
+            if(StringUtils.isNotEmpty(simnum) && simnum.length() > 8)
+                simnum = simnum.substring(8);
+            req.setSimInfo(simnum);
             int operationTypeValue = getOperationTypeValue(tcmpVerificationCheckReq);
             req.setOperationType(operationTypeValue);
             MPVerificationCheckResp resp = mobileVerificationAuthApi.mobileVerificationAuth(req);

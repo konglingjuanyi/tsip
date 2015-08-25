@@ -52,9 +52,11 @@
 	<dubbo:reference id="simCardApi"  check="false" interface="com.zxq.iov.cloud.sp.mds.tcmp.api.ISimCardApi" version="1.1"/>
 	<dubbo:reference id="pinCodeApi"  check="false" interface="com.zxq.iov.cloud.sp.mds.tcmp.api.IPinCodeApi" version="1.1"/>
 	<dubbo:reference id="servicePhoneApi"  check="false" interface="com.zxq.iov.cloud.sp.mds.tcmp.api.IServicePhoneApi" version="1.1"/>
+	<dubbo:reference id="addPersonalVehicleMPAuthApi"  check="false" interface="com.zxq.iov.cloud.sp.mds.tcmp.api.IAddPersonalVehicleMPAuthApi" version="1.1"/>
 
-	<dubbo:reference id="iTAvnLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnLoginVerifyService" version="1.1"/>
-	<dubbo:reference id="iTMPLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITMPLoginVerifyService" version="1.1"/>
+	<dubbo:reference id="iTAvnLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnAuthApi" version="1.1"/>
+	<dubbo:reference id="iTMPLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITMPAuthApi" version="1.1"/>
+	<dubbo:reference id="iTASLoginVerifyService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAsUserLoginApi" version="1.1"/>
 
 	<!--<dubbo:reference id="avnUserLoginAuthService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnUserLoginAuthService" version="1.1"/>-->
 	<!--<dubbo:reference id="avnEquipLoginAuthService" interface="com.zxq.iov.cloud.sec.tvowner.api.ITAvnEquipLoginAuthService" version="1.1"/>-->

@@ -17,7 +17,7 @@ public class AsServiceHelper implements ServiceHelper {
     public String callDubboService(RequestContext context) throws ApiException {
         String plf = context.getPlatform();
         String source = context.getSource();
-        IApplicationService service = (IApplicationService) SpringContext.getInstance().getBean("vpAppServiceV1");
+        IApplicationService service = (IApplicationService) SpringContext.getInstance().getBean("asService");
         String requestBack = service.execute(plf,source);
         return requestBack;
     }

@@ -6,21 +6,6 @@
   ~ @Project: Telematics
   -->
 <protocol>
-    <message applicationID="501" messageID="1" spAppID="705" spMsgID="1" servicePlatform="007">
-        <protocols>
-            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.1">
-                <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.login.MPUserLoggingInReq_2_0_Callback</callback>
-            </protocol>
-        </protocols>
-    </message>
-    <message applicationID="502" messageID="1" spAppID="721" spMsgID="1" servicePlatform="007">
-        <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.login.MPVerificationReqCallback</callback>
-        <protocols>
-            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.1">
-            </protocol>
-        </protocols>
-    </message>
-
     <message applicationID="503" messageID="1" spAppID="722" spMsgID="1" servicePlatform="007">
         <protocols>
             <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.1">
@@ -73,12 +58,7 @@
         </protocols>
     </message>
 
-    <message applicationID="531" messageID="1" spAppID="611" spMsgID="1" servicePlatform="008">
-        <protocols>
-            <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.1">
-            </protocol>
-        </protocols>
-    </message>
+
     <message applicationID="533" messageID="1" spAppID="616" spMsgID="1" servicePlatform="008">
         <protocols>
             <protocol clientVersion="1.1" serviceVersion="1.1" appVersion="2.1">
@@ -91,19 +71,19 @@
             </protocol>
         </protocols>
     </message>
-    <message applicationID="551" messageID="1" spAppID="6D3" spMsgID="1" servicePlatform="010">
-        <protocols>
-            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.1">
-                <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.FavoritePOIQueryReqCallback</callback>
-            </protocol>
-        </protocols>
-    </message>
-    <message applicationID="552" messageID="1" spAppID="6D4" spMsgID="1" servicePlatform="010">
-        <callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.AddToFavoritePOIReqCallback</callback>
-        <protocols>
-            <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.1"/>
-        </protocols>
-    </message>
+    <!--<message applicationID="551" messageID="1" spAppID="6D3" spMsgID="1" servicePlatform="010">-->
+        <!--<protocols>-->
+            <!--<protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.1">-->
+                <!--<callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.FavoritePOIQueryReqCallback</callback>-->
+            <!--</protocol>-->
+        <!--</protocols>-->
+    <!--</message>-->
+    <!--<message applicationID="552" messageID="1" spAppID="6D4" spMsgID="1" servicePlatform="010">-->
+        <!--<callback>com.saicmotor.telematics.tsgp.tsip.otamsghandler.callback.mp.poi.AddToFavoritePOIReqCallback</callback>-->
+        <!--<protocols>-->
+            <!--<protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.1"/>-->
+        <!--</protocols>-->
+    <!--</message>-->
     <message applicationID="553" messageID="1" spAppID="6D5" spMsgID="1" servicePlatform="010">
         <protocols>
             <protocol clientVersion="1.1" serviceVersion="1.2" appVersion="2.1">
